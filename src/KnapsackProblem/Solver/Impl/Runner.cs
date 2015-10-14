@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Diagnostics;
+using System.Linq;
 using Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Providers;
 
 namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solver.Impl
@@ -20,12 +22,20 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solver.Impl
         {
             var instances = instanceProvider.GetInstances();
 
+            var sw = new Stopwatch();
+            sw.Start();
+
             var results = instances.Select(instance => solver.GetAnyResult(instance)).ToList().AsReadOnly();
+
+            sw.Stop();
 
             foreach (var result in results)
             {
                 resultHandler.HandleResult(result);
             }
+
+            Console.WriteLine();
+            Console.WriteLine($"Time: {sw.Elapsed}");
         }
     }
 }

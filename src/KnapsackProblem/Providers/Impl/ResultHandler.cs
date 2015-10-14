@@ -10,13 +10,18 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Providers.Impl
     {
         public void HandleResult(Result result)
         {
-            Console.WriteLine($"ID:{result.Instance.Id} P:{result.Price} W:{result.Weight} I:{GetStringRepresentaion(result.State)}");
+            var itemsStr = GetStringRepresentaion(result.State, result.Instance);
+            Console.WriteLine($"ID:{result.Instance.Id}\tP:{result.Price}\tW:{result.Weight}\tI:[{itemsStr}]");
         }
 
-        private static string GetStringRepresentaion(BigInteger num)
+        private static string GetStringRepresentaion(BigInteger num, Instance instance)
         {
-            var splitted = num.ToBinaryString().Reverse().Select(ch => new String(new[] {ch, ' '}));
+            var splitted = num.ToBinaryString()
+                .PadLeft(instance.ItemCount, '0')
+                .Reverse()
+                .Select(ch => new String(new[] {ch, ' '}));
             var res = String.Join("", splitted);
+            res = res.Substring(0, res.Length - 1);
             return res;
         }
     }

@@ -25,12 +25,6 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Extensions
             // Convert first byte to binary.
             var binary = Convert.ToString(bytes[idx], 2);
 
-            // Ensure leading zero exists if value is positive.
-            //if (binary[0] != '0' && bigint.Sign == 1)
-            //{
-            //    base2.Append('0');
-            //}
-
             // Append binary string to StringBuilder.
             base2.Append(binary);
 
