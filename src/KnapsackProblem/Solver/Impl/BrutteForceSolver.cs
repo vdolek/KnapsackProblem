@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System.Numerics;
 using Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Model;
 
 namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solver.Impl
@@ -7,12 +7,55 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solver.Impl
     {
         public Result GetAnyResult(Instance instance)
         {
-            throw new System.NotImplementedException();
+            var result = new Result();
+            result.Instance = instance;
+
+            var max = BigInteger.One << instance.ItemCount;
+
+            for (var i = BigInteger.Zero; i < max; ++i)
+            {
+                var partResult = Evaluate(instance, i);
+
+                if (partResult.Weight <= instance.Capacity)
+                {
+                    if (partResult.Price > result.Price)
+                    {
+                        result.State = i;
+                        result.Weight = partResult.Weight;
+                        result.Price = partResult.Price;
+                    }
+                }
+            }
+
+            return result;
         }
 
-        public IList<Result> GetAllResults(Instance instance)
+        private PartResult Evaluate(Instance instance, BigInteger state)
         {
-            throw new System.NotImplementedException();
+            var partResult = new PartResult();
+
+            for (var i = 0; ; ++i)
+            {
+                var num = BigInteger.One << i;
+
+                if (num > state)
+                    break;
+
+                if ((state & num) != 0)
+                {
+                    partResult.Price += instance.Items[i].Price;
+                    partResult.Weight += instance.Items[i].Weight;
+                }
+            }
+
+            return partResult;
+        }
+
+        private class PartResult
+        {
+            public int Weight { get; set; }
+
+            public int Price { get; set; }
         }
     }
 }

@@ -22,7 +22,7 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Providers.Impl
                     new Item(18, 114),
                     new Item(42, 136),
                     new Item(88, 192),
-                    new Item(3, 233)
+                    new Item(3, 223)
                 }
             };
 
