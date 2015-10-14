@@ -6,6 +6,9 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Model
 
         public int Price { get; set; }
 
+        public Item()
+        { }
+
         public Item(int weight, int price)
         {
             Weight = weight;

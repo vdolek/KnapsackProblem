@@ -52,6 +52,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\Impl\ResultHandler.cs" />
+    <Compile Include="Providers\Impl\TextReaderInstanceProvider.cs" />
     <Compile Include="Providers\Impl\TestInstanceProvider.cs" />
     <Compile Include="Providers\IResultHandler.cs" />
     <Compile Include="Solver\Impl\BrutteForceSolver.cs" />
