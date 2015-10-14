@@ -20,10 +20,10 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solver.Impl
 
         public void Run()
         {
+            // get instances
             var instances = instanceProvider.GetInstances();
 
-            var sw = new Stopwatch();
-            sw.Start();
+            var sw = Stopwatch.StartNew();
 
             var results = instances.Select(instance => solver.GetAnyResult(instance)).ToList().AsReadOnly();
 
@@ -35,7 +35,8 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solver.Impl
             }
 
             Console.WriteLine();
-            Console.WriteLine($"Time: {sw.Elapsed}");
+            Console.WriteLine($"Time:    {sw.Elapsed}");
+            Console.WriteLine($"Seconds: {sw.Elapsed.TotalSeconds}");
         }
     }
 }
