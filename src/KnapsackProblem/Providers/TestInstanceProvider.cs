@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Model;
 
-namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Providers.Impl
+namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Providers
 {
     public class TestInstanceProvider : IInstanceProvider
     {

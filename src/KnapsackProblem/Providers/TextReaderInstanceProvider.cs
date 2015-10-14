@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 using Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Model;
 
-namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Providers.Impl
+namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Providers
 {
     public class TextReaderInstanceProvider : IInstanceProvider
     {

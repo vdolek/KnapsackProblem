@@ -4,8 +4,9 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Model;
 using Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Providers;
+using Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solvers;
 
-namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solver.Impl
+namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Runners
 {
     public class CompareRunner : IRunner
     {

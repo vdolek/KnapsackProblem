@@ -1,7 +1,8 @@
 ﻿using System;
 using System.IO;
-using Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Providers.Impl;
-using Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solver.Impl;
+using Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Providers;
+using Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Runners;
+using Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solvers;
 
 namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem
 {
@@ -15,10 +16,9 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem
             var instanceProvider = new TextReaderInstanceProvider(new StreamReader(path));
             var brutteForceSolver = new BrutteForceSolver();
             var heuristicSolver = new HeuristicSolver();
-            var resultHandler = new ResultHandler();
 
-            //var runner = new SimpleRunner(instanceProvider, resultHandler, brutteForceSolver);
-            //var runner = new SimpleRunner(instanceProvider, resultHandler, heuristicSolver);
+            //var runner = new SimpleRunner(instanceProvider, brutteForceSolver);
+            //var runner = new SimpleRunner(instanceProvider, heuristicSolver);
             var runner = new CompareRunner(instanceProvider, brutteForceSolver, heuristicSolver);
 
             runner.Run();

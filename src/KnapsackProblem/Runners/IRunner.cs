@@ -1,4 +1,4 @@
-﻿namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solver
+﻿namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Runners
 {
     public interface IRunner
     {
