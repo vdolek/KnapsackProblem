@@ -1,15 +1,15 @@
+﻿using System.Numerics;
+
 namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Model
 {
-    public class Item
+    public class Result
     {
+        public Instance Instance { get; set; }
+
+        public BigInteger State { get; set; }
+
         public int Weight { get; set; }
 
         public int Price { get; set; }
-
-        public Item(int weight, int price)
-        {
-            Weight = weight;
-            Price = price;
-        }
     }
 }
