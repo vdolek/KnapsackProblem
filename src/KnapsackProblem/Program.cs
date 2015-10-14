@@ -9,14 +9,16 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem
     {
         static void Main(string[] args)
         {
-            var path = @"C:\Users\volek\OneDrive\School\FIT\Mgr\3. semestr\PAA - Problémy a algoritmy\Archiv instancí\knap_20.inst.dat";
+            var path = @"C:\Users\volek\OneDrive\School\FIT\Mgr\3. semestr\PAA - Problémy a algoritmy\Archiv instancí\knap_4.inst.dat";
 
             //var instanceProvider = new TestInstanceProvider();
             var instanceProvider = new TextReaderInstanceProvider(new StreamReader(path));
-            var solver = new BrutteForceSolver();
+            var brutteForceSolver = new BrutteForceSolver();
+            var heuristicSolver = new HeuristicSolver();
             var resultHandler = new ResultHandler();
 
-            var runner = new SimpleRunner(instanceProvider, resultHandler, solver);
+            var runner = new SimpleRunner(instanceProvider, resultHandler, brutteForceSolver);
+            //var runner = new SimpleRunner(instanceProvider, resultHandler, heuristicSolver);
 
             runner.Run();
             Console.WriteLine("Done.");

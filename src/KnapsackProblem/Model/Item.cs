@@ -2,6 +2,8 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Model
 {
     public class Item
     {
+        public int Index { get; set; }
+
         public int Weight { get; set; }
 
         public int Price { get; set; }

@@ -38,6 +38,7 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Providers.Impl
                 {
                     var item = new Item
                     {
+                        Index = i,
                         Weight = int.Parse(splitted[3 + 2*i]),
                         Price = int.Parse(splitted[4 + 2*i])
                     };

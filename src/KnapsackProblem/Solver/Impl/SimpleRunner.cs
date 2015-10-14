@@ -25,10 +25,12 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solver.Impl
 
             var sw = Stopwatch.StartNew();
 
+            // get results
             var results = instances.Select(instance => solver.GetAnyResult(instance)).ToList().AsReadOnly();
 
             sw.Stop();
 
+            // handle all results
             foreach (var result in results)
             {
                 resultHandler.HandleResult(result);
