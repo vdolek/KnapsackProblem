@@ -7,7 +7,7 @@
     <ProjectGuid>{D423DEFF-6FD2-4685-AC01-A42EA4F3EDD9}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>KnapsackProblem</RootNamespace>
+    <RootNamespace>Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem</RootNamespace>
     <AssemblyName>KnapsackProblem</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -48,6 +48,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="IO\" />
+    <Folder Include="Model\" />
+    <Folder Include="Solver\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
