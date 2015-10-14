@@ -48,7 +48,7 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Runners
                 var res1 = results1[i];
                 var res2 = results2[i];
 
-                var divergence = Math.Abs((res1.Price - res2.Price) / (double)res1.Price);
+                var divergence = (res1.Price - res2.Price) / (double)res1.Price;
                 divergences.Add(divergence);
 
                 Console.WriteLine($"Relative divergence: {divergence}");
