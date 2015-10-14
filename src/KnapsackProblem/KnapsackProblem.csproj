@@ -57,6 +57,7 @@
     <Compile Include="Providers\IResultHandler.cs" />
     <Compile Include="Solver\Impl\HeuristicSolver.cs" />
     <Compile Include="Solver\Impl\BrutteForceSolver.cs" />
+    <Compile Include="Solver\Impl\CompareRunner.cs" />
     <Compile Include="Solver\Impl\SimpleRunner.cs" />
     <Compile Include="Solver\IRunner.cs" />
     <Compile Include="Solver\ISolver.cs" />
