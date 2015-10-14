@@ -16,7 +16,7 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem
             var solver = new BrutteForceSolver();
             var resultHandler = new ResultHandler();
 
-            var runner = new Runner(instanceProvider, resultHandler, solver);
+            var runner = new SimpleRunner(instanceProvider, resultHandler, solver);
 
             runner.Run();
             Console.WriteLine("Done.");

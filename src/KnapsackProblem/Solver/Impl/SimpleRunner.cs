@@ -5,13 +5,13 @@ using Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Providers;
 
 namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solver.Impl
 {
-    public class Runner : IRunner
+    public class SimpleRunner : IRunner
     {
         private readonly IInstanceProvider instanceProvider;
         private readonly IResultHandler resultHandler;
         private readonly ISolver solver;
 
-        public Runner(IInstanceProvider instanceProvider, IResultHandler resultHandler, ISolver solver)
+        public SimpleRunner(IInstanceProvider instanceProvider, IResultHandler resultHandler, ISolver solver)
         {
             this.instanceProvider = instanceProvider;
             this.resultHandler = resultHandler;
