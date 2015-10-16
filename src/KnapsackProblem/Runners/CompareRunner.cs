@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Model;
 using Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Providers;
@@ -11,14 +12,14 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Runners
     public class CompareRunner : IRunner
     {
         private readonly IInstanceProvider instanceProvider;
-        private readonly ISolver solver1;
-        private readonly ISolver solver2;
+        private readonly ISolver exactSolver;
+        private readonly ISolver solver;
 
-        public CompareRunner(IInstanceProvider instanceProvider, ISolver solver1, ISolver solver2)
+        public CompareRunner(IInstanceProvider instanceProvider, ISolver exactSolver, ISolver solver)
         {
             this.instanceProvider = instanceProvider;
-            this.solver1 = solver1;
-            this.solver2 = solver2;
+            this.exactSolver = exactSolver;
+            this.solver = solver;
         }
 
         public void Run()
@@ -27,31 +28,40 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Runners
             var instances = instanceProvider.GetInstances();
 
             // get results
-            var results1 = instances.Select(instance => solver1.GetAnyResult(instance)).ToList().AsReadOnly();
-            var results2 = instances.Select(instance => solver2.GetAnyResult(instance)).ToList().AsReadOnly();
+            var sw1 = Stopwatch.StartNew();
+            var exactResults = instances.Select(instance => exactSolver.GetAnyResult(instance)).ToList().AsReadOnly();
+            sw1.Stop();
+
+            var sw2 = Stopwatch.StartNew();
+            var results = instances.Select(instance => solver.GetAnyResult(instance)).ToList().AsReadOnly();
+            sw1.Stop();
 
             // handle all results
-            HanldeResults(results1, results2);
+            HanldeResults(exactResults, results);
 
+            Console.WriteLine();
+            Console.WriteLine($"Exact Run Time: {sw1.Elapsed}");
+            Console.WriteLine($"      Run Time: {sw2.Elapsed}");
+            Console.WriteLine($"         Ratio: {sw2.ElapsedMilliseconds / (double)sw1.ElapsedMilliseconds}");
             Console.WriteLine();
         }
 
-        private void HanldeResults(ReadOnlyCollection<Result> results1, ReadOnlyCollection<Result> results2)
+        private void HanldeResults(ReadOnlyCollection<Result> exactResults, ReadOnlyCollection<Result> results)
         {
-            if (results1.Count != results2.Count)
+            if (exactResults.Count != results.Count)
                 throw new ApplicationException("Result sets are not the same size.");
 
-            var divergences = new List<double>(results1.Count);
+            var divergences = new List<double>(exactResults.Count);
 
-            for (var i = 0; i < results1.Count; ++i)
+            for (var i = 0; i < exactResults.Count; ++i)
             {
-                var res1 = results1[i];
-                var res2 = results2[i];
+                var exactResult = exactResults[i];
+                var result = results[i];
 
-                var divergence = (res1.Price - res2.Price) / (double)res1.Price;
+                var divergence = (exactResult.Price - result.Price) / (double)exactResult.Price;
                 divergences.Add(divergence);
 
-                Console.WriteLine($"Relative divergence: {divergence}");
+                Console.WriteLine($"ID:{result.Instance.Id}\tExactPrice:{exactResult.Price}\tPrice:{result.Price}\tDivergence:{divergence}");
             }
 
             Console.WriteLine();
