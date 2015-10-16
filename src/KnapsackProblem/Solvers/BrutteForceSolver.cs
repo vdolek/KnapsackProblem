@@ -10,9 +10,9 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solvers
             var result = new Result();
             result.Instance = instance;
 
-            var max = BigInteger.One << instance.ItemCount;
+            var max = 1L << instance.ItemCount;
 
-            for (var i = BigInteger.Zero; i < max; ++i)
+            for (var i = 0L; i < max; ++i)
             {
                 var partResult = Evaluate(instance, i);
 
@@ -30,13 +30,13 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solvers
             return result;
         }
 
-        private PartResult Evaluate(Instance instance, BigInteger state)
+        private PartResult Evaluate(Instance instance, long state)
         {
             var partResult = new PartResult();
 
             for (var i = 0; ; ++i)
             {
-                var num = BigInteger.One << i;
+                var num = 1L << i;
 
                 if (num > state)
                     break;

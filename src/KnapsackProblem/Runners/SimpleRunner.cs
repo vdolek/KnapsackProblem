@@ -49,7 +49,7 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Runners
             Console.WriteLine($"ID:{result.Instance.Id}\tP:{result.Price}\tW:{result.Weight}\tI:[{itemsStr}]");
         }
 
-        private static string GetStringRepresentaion(BigInteger num, Instance instance)
+        private static string GetStringRepresentaion(long num, Instance instance)
         {
             var splitted = num.ToBinaryString()
                 .PadLeft(instance.ItemCount, '0')

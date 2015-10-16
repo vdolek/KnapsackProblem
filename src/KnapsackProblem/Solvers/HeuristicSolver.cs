@@ -22,7 +22,7 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solvers
 
                 result.Weight = newWeight;
                 result.Price += item.Price;
-                result.State |= BigInteger.One << item.Index;
+                result.State |= 1L << item.Index;
             }
 
             return result;

@@ -6,7 +6,7 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Model
     {
         public Instance Instance { get; set; }
 
-        public BigInteger State { get; set; }
+        public long State { get; set; }
 
         public int Weight { get; set; }
 
