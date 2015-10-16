@@ -18,7 +18,7 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solvers
                 var newWeight = result.Weight + item.Weight;
 
                 if (newWeight > instance.Capacity)
-                    break;
+                    continue;
 
                 result.Weight = newWeight;
                 result.Price += item.Price;
