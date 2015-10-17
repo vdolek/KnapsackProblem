@@ -46,7 +46,7 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Runners
             Console.WriteLine($"Average relative divergence: {averageRelativeDivergence}");
             Console.WriteLine($"             Exact Run Time: {sw1.Elapsed}");
             Console.WriteLine($"                   Run Time: {sw2.Elapsed}");
-            Console.WriteLine($"                      Ratio: {sw2.ElapsedMilliseconds / (double)sw1.ElapsedMilliseconds}");
+            Console.WriteLine($"                      Ratio: {sw1.ElapsedTicks / (double)sw2.ElapsedTicks}");
             Console.WriteLine();
         }
 

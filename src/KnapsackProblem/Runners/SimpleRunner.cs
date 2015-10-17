@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Linq;
-using System.Numerics;
 using Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Extensions;
 using Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Model;
 using Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Providers;
