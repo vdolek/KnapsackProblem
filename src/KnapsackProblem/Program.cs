@@ -8,11 +8,25 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem
 {
     class Program
     {
+        private const string Path = @"C:\Users\volek\OneDrive\School\FIT\Mgr\3. semestr\PAA - Problémy a algoritmy\Archiv instancí\knap_{0}.inst.dat";
+        private static readonly int[] Sizes = {4, 10, 15, 20, 22, 25, 27, 30, 32, 35, 37, 40};
+
         static void Main(string[] args)
         {
-            var path = @"C:\Users\volek\OneDrive\School\FIT\Mgr\3. semestr\PAA - Problémy a algoritmy\Archiv instancí\knap_20.inst.dat";
+            foreach (var size in Sizes)
+            {
+                RunForSize(size);
+            }
 
-            //var instanceProvider = new TestInstanceProvider();
+            Console.WriteLine("Done.");
+            Console.ReadLine();
+        }
+
+        private static void RunForSize(int size)
+        {
+            Console.WriteLine($"Size {size}:");
+
+            var path = String.Format(Path, size);
             var instanceProvider = new TextReaderInstanceProvider(new StreamReader(path));
             var brutteForceSolver = new BrutteForceSolver();
             var heuristicSolver = new HeuristicSolver();
@@ -22,9 +36,6 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem
             var runner = new CompareRunner(instanceProvider, brutteForceSolver, heuristicSolver);
 
             runner.Run();
-
-            Console.WriteLine("Done.");
-            Console.ReadLine();
         }
     }
 }

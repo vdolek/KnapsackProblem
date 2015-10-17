@@ -9,14 +9,14 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Extensions
         /// <summary>
         /// Converts a <see cref="long"/> to a binary string.
         /// </summary>
-        /// <param name="bigint">A <see cref="long"/>.</param>
+        /// <param name="num">A <see cref="long"/>.</param>
         /// <returns>
         /// A <see cref="System.String"/> containing a binary
         /// representation of the supplied <see cref="long"/>.
         /// </returns>
-        public static string ToBinaryString(this long bigint)
+        public static string ToBinaryString(this long num)
         {
-            throw new NotImplementedException();
+            return Convert.ToString(num, 2);
         }
     }
 }

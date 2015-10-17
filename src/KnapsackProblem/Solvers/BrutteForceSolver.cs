@@ -1,5 +1,4 @@
-﻿using System.Numerics;
-using Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Model;
+﻿using Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Model;
 
 namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solvers
 {

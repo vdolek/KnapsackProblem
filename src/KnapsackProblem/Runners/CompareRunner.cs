@@ -36,13 +36,17 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Runners
             var results = instances.Select(instance => solver.GetAnyResult(instance)).ToList().AsReadOnly();
             sw1.Stop();
 
-            // handle all results
-            HanldeResults(exactResults, results);
 
-            Console.WriteLine();
-            Console.WriteLine($"Exact Run Time: {sw1.Elapsed}");
-            Console.WriteLine($"      Run Time: {sw2.Elapsed}");
-            Console.WriteLine($"         Ratio: {sw2.ElapsedMilliseconds / (double)sw1.ElapsedMilliseconds}");
+            // handle all results
+            var averageRelativeDivergence =
+                exactResults
+                    .Zip(results, (er, r) => new {er, r})
+                    .Average(i => (i.er.Price - i.r.Price)/(double) i.er.Price);
+
+            Console.WriteLine($"Average relative divergence: {averageRelativeDivergence}");
+            Console.WriteLine($"             Exact Run Time: {sw1.Elapsed}");
+            Console.WriteLine($"                   Run Time: {sw2.Elapsed}");
+            Console.WriteLine($"                      Ratio: {sw2.ElapsedMilliseconds / (double)sw1.ElapsedMilliseconds}");
             Console.WriteLine();
         }
 
@@ -61,11 +65,11 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Runners
                 var divergence = (exactResult.Price - result.Price) / (double)exactResult.Price;
                 divergences.Add(divergence);
 
-                Console.WriteLine($"ID:{result.Instance.Id}\tExactPrice:{exactResult.Price}\tPrice:{result.Price}\tDivergence:{divergence}");
+                //Console.WriteLine($"ID:{result.Instance.Id}\tExactPrice:{exactResult.Price}\tPrice:{result.Price}\tDivergence:{divergence}");
             }
 
-            Console.WriteLine();
-            Console.WriteLine($"Average relative divergence: {divergences.Average(d => d)}");
+            var averageRelativeDivergence = divergences.Average(d => d);
+            Console.WriteLine($"Average relative divergence: {averageRelativeDivergence}");
         }
     }
 }
