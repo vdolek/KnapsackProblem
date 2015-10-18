@@ -28,12 +28,24 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Runners
             var instances = instanceProvider.GetInstances();
 
             // get results
+            IList<Result> exactResults = null;
             var sw1 = Stopwatch.StartNew();
-            var exactResults = instances.Select(instance => exactSolver.GetAnyResult(instance)).ToList().AsReadOnly();
+            var exactRunCount = 0;
+            while (sw1.ElapsedMilliseconds < 1000)
+            {
+                ++exactRunCount;
+                exactResults = instances.Select(instance => exactSolver.GetAnyResult(instance)).ToList().AsReadOnly();
+            }
             sw1.Stop();
 
+            ReadOnlyCollection<Result> results = null;
             var sw2 = Stopwatch.StartNew();
-            var results = instances.Select(instance => solver.GetAnyResult(instance)).ToList().AsReadOnly();
+            var runCount = 0;
+            while (sw2.ElapsedMilliseconds < 1000)
+            {
+                ++runCount;
+                results = instances.Select(instance => solver.GetAnyResult(instance)).ToList().AsReadOnly();
+            }
             sw1.Stop();
 
 
@@ -43,10 +55,13 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Runners
                     .Zip(results, (er, r) => new {er, r})
                     .Average(i => (i.er.Price - i.r.Price)/(double) i.er.Price);
 
+            var time1 = new TimeSpan(sw1.ElapsedTicks / exactRunCount);
+            var time2 = new TimeSpan(sw2.ElapsedTicks / runCount);
+
             Console.WriteLine($"Average relative divergence: {averageRelativeDivergence}");
-            Console.WriteLine($"             Exact Run Time: {sw1.Elapsed}");
-            Console.WriteLine($"                   Run Time: {sw2.Elapsed}");
-            Console.WriteLine($"                      Ratio: {sw1.ElapsedTicks / (double)sw2.ElapsedTicks}");
+            Console.WriteLine($"             Exact Run Time: {time1}\t(run {exactRunCount} times)");
+            Console.WriteLine($"                   Run Time: {time2}\t(run {runCount} times)");
+            Console.WriteLine($"                      Ratio: {time1.Ticks / (double)time2.Ticks}");
             Console.WriteLine();
         }
 
