@@ -8,18 +8,26 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem
 {
     class Program
     {
-        private const string Path = @"C:\Users\volek\OneDrive\School\FIT\Mgr\3. semestr\PAA - Problémy a algoritmy\Archiv instancí\knap_{0}.inst.dat";
+        private const string Path = @".\Data\knap_{0}.inst.dat";
         private static readonly int[] Sizes = {4, 10, 15, 20, 22, 25, 27, 30, 32, 35, 37, 40};
 
         static void Main(string[] args)
         {
-            foreach (var size in Sizes)
+            try
             {
-                RunForSize(size);
-            }
+                foreach (var size in Sizes)
+                {
+                    RunForSize(size);
+                }
 
-            Console.WriteLine("Done.");
-            Console.ReadLine();
+                Console.WriteLine("Done.");
+                Console.ReadLine();
+            }
+            catch (Exception exc)
+            {
+                Console.Error.WriteLine("ERROR");
+                Console.Error.WriteLine(exc.Message);
+            }
         }
 
         private static void RunForSize(int size)

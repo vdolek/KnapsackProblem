@@ -50,15 +50,18 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Runners
 
 
             // handle all results
-            var averageRelativeDivergence =
+            var relativeDivergences =
                 exactResults
                     .Zip(results, (er, r) => new {er, r})
-                    .Average(i => (i.er.Price - i.r.Price)/(double) i.er.Price);
+                    .Select(i => (i.er.Price - i.r.Price)/(double) i.er.Price).ToList().AsReadOnly();
+            var averageRelativeDivergence = relativeDivergences.Average(x => x);
+            var maxRelativeDivergence = relativeDivergences.Max(x => x);
 
             var time1 = new TimeSpan((long) (sw1.ElapsedMilliseconds * 10000 / (double) exactRunCount));
             var time2 = new TimeSpan((long) (sw2.ElapsedMilliseconds * 10000 / (double) runCount));
 
             Console.WriteLine($"Average relative divergence: {averageRelativeDivergence}");
+            Console.WriteLine($"    Max relative divergence: {maxRelativeDivergence}");
             Console.WriteLine($"             Exact Run Time: {time1}\t(run {exactRunCount} times)");
             Console.WriteLine($"                   Run Time: {time2}\t(run {runCount} times)");
             Console.WriteLine($"                      Ratio: {time1.Ticks / (double)time2.Ticks}");
