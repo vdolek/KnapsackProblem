@@ -30,6 +30,7 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solvers
                 return new Result(Instance, 0, 0, 0);
             }
 
+            // current item
             var item = Instance.Items[n];
 
             // item is not contained
