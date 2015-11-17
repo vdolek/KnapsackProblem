@@ -12,8 +12,7 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solvers
         {
             var ordered = instance.Items.OrderByDescending(item => ((double)item.Price) / item.Weight);
 
-            var result = new Result();
-            result.Instance = instance;
+            var result = new Result(instance, 0, 0, 0);
 
             foreach (var item in ordered)
             {

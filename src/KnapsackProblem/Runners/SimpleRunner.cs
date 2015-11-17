@@ -31,11 +31,11 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Runners
 
             sw.Stop();
 
-            // handle all results
-            foreach (var result in results)
-            {
-                HandleResult(result);
-            }
+            ////// handle all results
+            ////foreach (var result in results)
+            ////{
+            ////    HandleResult(result);
+            ////}
 
             Console.WriteLine();
             Console.WriteLine($"Time:    {sw.Elapsed}");

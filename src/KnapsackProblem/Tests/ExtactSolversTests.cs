@@ -13,15 +13,25 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Tests
         [TestMethod]
         public void TestBruteForceLinqSolver()
         {
-            TestSolverFull(new BrutteForceLinqSolver());
             TestSolver(new BrutteForceLinqSolver());
         }
 
         [TestMethod]
-        public void TestBrutteForceRecursiveSolverSolver()
+        public void TestBrutteForceRecursiveSolver()
         {
-            TestSolverFull(new BrutteForceRecursiveSolver());
             TestSolver(new BrutteForceRecursiveSolver());
+        }
+
+        [TestMethod]
+        public void TestDynamicSolver()
+        {
+            TestSolver(new DynamicSolver());
+        }
+
+        private void TestSolver(ISolver solver)
+        {
+            TestSolverFull(solver);
+            TestSolverOnlyPrice(solver);
         }
 
         private void TestSolverFull(ISolver solver)
@@ -40,9 +50,9 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Tests
             }
         }
 
-        private void TestSolver(ISolver solver)
+        private void TestSolverOnlyPrice(ISolver solver)
         {
-            var instanceProvider = new TextReaderInstanceProvider(new StreamReader(string.Format(Path, 10)));
+            var instanceProvider = new TextReaderInstanceProvider(new StreamReader(string.Format(Path, 15)));
             var brutteForceSolver = new BrutteForceSolver();
 
             foreach (var instance in instanceProvider.GetInstances())

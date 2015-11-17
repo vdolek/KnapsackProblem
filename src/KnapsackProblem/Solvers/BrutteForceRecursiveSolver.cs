@@ -1,4 +1,5 @@
-﻿using Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Model;
+﻿using System.ComponentModel;
+using Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Model;
 
 namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solvers
 {
@@ -12,23 +13,23 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solvers
         public Result GetAnyResult(Instance instance)
         {
             Instance = instance;
-            
+
+            Init();
+
             var result = SolveKnapsack(instance.Capacity, 0);
             result.Instance = instance;
             return result;
+        }
+
+        protected virtual void Init()
+        {
         }
 
         protected virtual Result SolveKnapsack(int capacity, int n)
         {
             if (Instance.Items.Count == n)
             {
-                return new Result
-                {
-                    Instance = null,
-                    Price = 0,
-                    Weight = 0,
-                    State = 0
-                };
+                return new Result(null, 0, 0, 0);
             }
 
             var item = Instance.Items[n];

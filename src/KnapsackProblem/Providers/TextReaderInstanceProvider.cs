@@ -17,7 +17,7 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Providers
         public IList<Instance> GetInstances()
         {
             return GetInstancesInner()
-                .Take(5)
+                ////.Take(5)
                 .ToList()
                 .AsReadOnly();
         }

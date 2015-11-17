@@ -9,8 +9,7 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solvers
     {
         public Result GetAnyResult(Instance instance)
         {
-            var result = new Result();
-            result.Instance = instance;
+            var result = new Result(instance, 0, 0, 0);
 
             var max = 1L << instance.ItemCount;
 

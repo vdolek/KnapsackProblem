@@ -32,5 +32,10 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Model
         public int Weight { get; set; }
 
         public int Price { get; set; }
+
+        public Result Clone()
+        {
+            return (Result)MemberwiseClone();
+        }
     }
 }
