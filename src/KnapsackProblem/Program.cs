@@ -16,7 +16,7 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem
         {
             try
             {
-                foreach (var size in Sizes)////.Skip(0).Take(1))
+                foreach (var size in Sizes)//.Skip(0).Take(1))
                 {
                     ////RunHomework1(size);
                     CompareSimpleVsRecursive(size);

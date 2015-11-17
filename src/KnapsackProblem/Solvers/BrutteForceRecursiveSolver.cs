@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Model;
+﻿using Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Model;
 
 namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solvers
 {
@@ -11,21 +9,15 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solvers
         public Result GetAnyResult(Instance instance)
         {
             Instance = instance;
-
-            var inst = new InstanceInner
-            {
-                Items = instance.Items,
-                Capacity = instance.Capacity
-            };
-
-            var result = SolveKnapsack(inst);
+            
+            var result = SolveKnapsack(instance.Capacity, 0);
             result.Instance = instance;
             return result;
         }
 
-        private Result SolveKnapsack(InstanceInner instance)
+        private Result SolveKnapsack(int capacity, int n)
         {
-            if (instance.Items.Count == 0)
+            if (Instance.Items.Count == n)
             {
                 return new Result
                 {
@@ -36,23 +28,19 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solvers
                 };
             }
 
-            var item = instance.Items.First();
+            var item = Instance.Items[n];
 
             // item is not contained
-            var instanceWithoutItem = instance;
-            instanceWithoutItem.Items = instance.Items.Skip(1).ToArray();
-            var resultWithoutItem = SolveKnapsack(instanceWithoutItem);
+            var resultWithoutItem = SolveKnapsack(capacity, n + 1);
             var priceWithoutItem = resultWithoutItem.Price;
 
             // item is contained
-            var instanceWithItem = instance;
-            instanceWithItem.Items = instance.Items.Skip(1).ToArray();
-            instanceWithItem.Capacity -= item.Weight;
-            var resultWithItem = SolveKnapsack(instanceWithItem);
+            var capacityWithoutItem = capacity - item.Weight;
+            var resultWithItem = SolveKnapsack(capacityWithoutItem, n + 1);
             var priceWithItem = resultWithItem.Price + item.Price;
 
             // which is better?
-            if (priceWithoutItem > priceWithItem || instanceWithItem.Capacity < 0)
+            if (priceWithoutItem > priceWithItem || capacityWithoutItem < 0)
             {
                 resultWithoutItem.State = resultWithoutItem.State << 1;
                 return resultWithoutItem;
@@ -64,13 +52,6 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solvers
                 resultWithItem.State = 1 | (resultWithItem.State << 1);
                 return resultWithItem;
             }
-        }
-        
-        private struct InstanceInner
-        {
-            public IList<Item> Items { get; set; }
-
-            public int Capacity { get; set; }
         }
     }
 }
