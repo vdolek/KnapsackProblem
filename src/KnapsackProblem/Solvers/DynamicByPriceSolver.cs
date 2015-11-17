@@ -22,20 +22,23 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solvers
 
             SolveKnapsack(0, 0);
 
-            var maxPrice = 0;
+            var bestPrice = 0;
+            var bestWeight = 0;
             for (var n = 0; n < weights.GetLength(0); ++n)
             {
                 for (var p = 0; p < weights.GetLength(1); ++p)
                 {
                     var weight = weights[n, p];
-                    if (p > maxPrice && weight.HasValue && weight <= instance.Capacity)
+                    if (p > bestPrice && weight.HasValue && weight <= instance.Capacity)
                     {
-                        maxPrice = p;
+                        bestPrice = p;
+                        bestWeight = weight.Value;
                     }
                 }
             }
 
-            var res = new Result(instance, 0, 0, maxPrice);
+            // TODO result state
+            var res = new Result(instance, 0, bestWeight, bestPrice);
             return res;
         }
 
