@@ -18,30 +18,22 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solvers
                 Capacity = instance.Capacity
             };
 
-            var res = SolveKnapsack(inst);
-
-            var result = new Result
-            {
-                Instance = instance,
-                Price = res,
-                Weight = 0,
-                State = 0
-            };
+            var result = SolveKnapsack(inst);
+            result.Instance = instance;
             return result;
         }
 
-        private int SolveKnapsack(InstanceInner instance)
+        private Result SolveKnapsack(InstanceInner instance)
         {
             if (!instance.Items.Any())
             {
-                ////return new Result
-                ////{
-                ////    Instance = null, // TODO
-                ////    Price = 0,
-                ////    Weight = 0,
-                ////    State = 0 // TODO
-                ////};
-                return 0;
+                return new Result
+                {
+                    Instance = null, // TODO
+                    Price = 0,
+                    Weight = 0,
+                    State = 0
+                };
             }
 
             var item = instance.Items.First();
@@ -49,22 +41,28 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solvers
             // item is not contained
             var instanceWithoutItem = instance;
             instanceWithoutItem.Items = instance.Items.Skip(1);
-            var priceWithoutItem = SolveKnapsack(instanceWithoutItem);
+            var resultWithoutItem = SolveKnapsack(instanceWithoutItem);
+            var priceWithoutItem = resultWithoutItem.Price;
 
             // item is contained
-            var newInstance2 = instance;
-            newInstance2.Items = instance.Items.Skip(1);
-            newInstance2.Capacity -= item.Weight;
-            var price2 = SolveKnapsack(newInstance2) + item.Price;
+            var instanceWithItem = instance;
+            instanceWithItem.Items = instance.Items.Skip(1);
+            instanceWithItem.Capacity -= item.Weight;
+            var resultWithItem = SolveKnapsack(instanceWithItem);
+            var priceWithItem = resultWithItem.Price + item.Price;
 
             // which is better?
-            if (priceWithoutItem > price2 || newInstance2.Capacity < 0)
+            if (priceWithoutItem > priceWithItem || instanceWithItem.Capacity < 0)
             {
-                return priceWithoutItem;
+                resultWithoutItem.State = resultWithoutItem.State << 1;
+                return resultWithoutItem;
             }
             else
             {
-                return price2;
+                resultWithItem.Price += item.Price;
+                resultWithItem.Weight += item.Weight;
+                resultWithItem.State = 1 | (resultWithItem.State << 1);
+                return resultWithItem;
             }
         }
         

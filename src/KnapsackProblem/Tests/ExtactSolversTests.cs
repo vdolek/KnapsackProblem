@@ -6,7 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Tests
 {
     [TestClass]
-    public class BrutteForceSolversTests
+    public class ExtactSolversTests
     {
         private const string Path = @".\Data\knap_10.inst.dat";
 
