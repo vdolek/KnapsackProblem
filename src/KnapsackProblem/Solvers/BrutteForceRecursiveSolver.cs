@@ -25,11 +25,11 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solvers
 
         private Result SolveKnapsack(InstanceInner instance)
         {
-            if (!instance.Items.Any())
+            if (instance.Items.Count == 0)
             {
                 return new Result
                 {
-                    Instance = null, // TODO
+                    Instance = null,
                     Price = 0,
                     Weight = 0,
                     State = 0
@@ -40,13 +40,13 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solvers
 
             // item is not contained
             var instanceWithoutItem = instance;
-            instanceWithoutItem.Items = instance.Items.Skip(1);
+            instanceWithoutItem.Items = instance.Items.Skip(1).ToArray();
             var resultWithoutItem = SolveKnapsack(instanceWithoutItem);
             var priceWithoutItem = resultWithoutItem.Price;
 
             // item is contained
             var instanceWithItem = instance;
-            instanceWithItem.Items = instance.Items.Skip(1);
+            instanceWithItem.Items = instance.Items.Skip(1).ToArray();
             instanceWithItem.Capacity -= item.Weight;
             var resultWithItem = SolveKnapsack(instanceWithItem);
             var priceWithItem = resultWithItem.Price + item.Price;
@@ -68,7 +68,7 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solvers
         
         private struct InstanceInner
         {
-            public IEnumerable<Item> Items { get; set; }
+            public IList<Item> Items { get; set; }
 
             public int Capacity { get; set; }
         }

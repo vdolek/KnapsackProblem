@@ -16,10 +16,11 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem
         {
             try
             {
-                foreach (var size in Sizes.Skip(0).Take(1))
+                foreach (var size in Sizes)////.Skip(0).Take(1))
                 {
                     ////RunHomework1(size);
-                    RunHomework2(size);
+                    CompareSimpleVsRecursive(size);
+                    ////RunHomework2(size);
                 }
 
                 Console.WriteLine("Done.");
@@ -42,6 +43,20 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem
             var heuristicSolver = new HeuristicSolver();
 
             var runner = new CompareRunner(instanceProvider, brutteForceSolver, heuristicSolver);
+
+            runner.Run();
+        }
+
+        private static void CompareSimpleVsRecursive(int size)
+        {
+            Console.WriteLine($"Size {size}:");
+
+            var path = string.Format(Path, size);
+            var instanceProvider = new TextReaderInstanceProvider(new StreamReader(path));
+            var brutteForceSolver = new BrutteForceSolver();
+            var brutteForceRecursiveSolver = new BrutteForceRecursiveSolver();
+
+            var runner = new CompareRunner(instanceProvider, brutteForceSolver, brutteForceRecursiveSolver);
 
             runner.Run();
         }
