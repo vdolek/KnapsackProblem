@@ -1,36 +1,32 @@
-﻿using Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Model;
+﻿using System;
+using Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Model;
 
 namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solvers
 {
     /// <summary>
-    /// Solves knapsack problem by recursion.
+    /// Solves knapsack problem by branch & bound method.
     /// </summary>
-    public class BrutteForceRecursiveSolver : ISolver
+    public class BranchAndBoundSolver : ISolver
     {
-        protected Instance Instance { get; set; }
+        private Instance instance;
 
         public Result GetAnyResult(Instance instance)
         {
-            this.Instance = instance;
-
-            Init();
-
+            this.instance = instance;
+            
             var result = SolveKnapsack(instance.Capacity, 0);
             return result;
         }
 
-        protected virtual void Init()
+        private Result SolveKnapsack(int capacity, int n)
         {
-        }
-
-        protected virtual Result SolveKnapsack(int capacity, int n)
-        {
-            if (Instance.Items.Count == n)
+            throw new NotImplementedException();
+            if (instance.Items.Count == n)
             {
-                return new Result(Instance, 0, 0, 0);
+                return new Result(instance, 0, 0, 0);
             }
 
-            var item = Instance.Items[n];
+            var item = instance.Items[n];
 
             // item is not contained
             var resultWithoutItem = SolveKnapsack(capacity, n + 1);

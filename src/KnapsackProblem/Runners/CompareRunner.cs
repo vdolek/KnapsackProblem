@@ -34,7 +34,7 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Runners
             while (sw1.ElapsedMilliseconds < 1000)
             {
                 ++exactRunCount;
-                exactResults = instances.AsParallel().Select(instance => exactSolver.GetAnyResult(instance)).ToList().AsReadOnly();
+                exactResults = instances.Select(instance => exactSolver.GetAnyResult(instance)).ToList().AsReadOnly();
             }
 
             sw1.Stop();
@@ -65,7 +65,7 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Runners
             Console.WriteLine($"    Max relative divergence: {maxRelativeDivergence}");
             Console.WriteLine($"             Exact Run Time: {time1}\t(run {exactRunCount} times)");
             Console.WriteLine($"                   Run Time: {time2}\t(run {runCount} times)");
-            Console.WriteLine($"                      Ratio: {time1.Ticks / (double)time2.Ticks}");
+            Console.WriteLine($"                      Ratio: {time1.Ticks / (double)time2.Ticks:P}");
             Console.WriteLine();
         }
 

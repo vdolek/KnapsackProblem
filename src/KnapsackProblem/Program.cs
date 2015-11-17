@@ -15,12 +15,11 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem
         {
             try
             {
-                foreach (var size in Sizes)//.Skip(0).Take(1))
+                foreach (var size in Sizes) ////.Skip(0).Take(1))
                 {
-                    //RunHomework1(size);
-                    //CompareSimpleVsRecursive(size);
-                    //CompareRecursiveVsDynamic(size);
-                    RunHomework2(size);
+                    ////RunHomework1(size);
+                    ////RunHomework2(size);
+                    Compare(size);
                 }
 
                 Console.WriteLine("Done.");
@@ -43,35 +42,6 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem
             var heuristicSolver = new HeuristicSolver();
 
             var runner = new CompareRunner(instanceProvider, brutteForceSolver, heuristicSolver);
-
-            runner.Run();
-        }
-
-        private static void CompareSimpleVsRecursive(int size)
-        {
-            Console.WriteLine($"Size {size}:");
-
-            var path = string.Format(Path, size);
-            var instanceProvider = new TextReaderInstanceProvider(new StreamReader(path));
-            var brutteForceSolver = new BrutteForceSolver();
-            var brutteForceRecursiveSolver = new BrutteForceRecursiveSolver();
-
-            var runner = new CompareRunner(instanceProvider, brutteForceSolver, brutteForceRecursiveSolver);
-
-            runner.Run();
-        }
-
-        private static void CompareRecursiveVsDynamic(int size)
-        {
-            Console.WriteLine($"Size {size}:");
-
-            var path = string.Format(Path, size);
-            var instanceProvider = new TextReaderInstanceProvider(new StreamReader(path));
-            var brutteForceRecursiveSolver = new BrutteForceSolver();
-            var dynamicSolver = new DynamicSolver();
-
-            var runner = new CompareRunner(instanceProvider, brutteForceRecursiveSolver, dynamicSolver);
-
             runner.Run();
         }
 
@@ -81,13 +51,24 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem
             Console.WriteLine($"Size {size}:");
 
             var path = string.Format(Path, size);
-            var instance1Provider = new TextReaderInstanceProvider(new StreamReader(path));
-            var instance2Provider = new TextReaderInstanceProvider(new StreamReader(path));
-            var dynamicSolver = new DynamicSolver();
+            var instanceProvider = new TextReaderInstanceProvider(new StreamReader(path));
+            var solver = new BrutteForceRecursiveSolver();
 
-            var runner2 = new SimpleRunner(instance2Provider, dynamicSolver);
+            var runner = new SimpleRunner(instanceProvider, solver);
+            runner.Run();
+        }
 
-            runner2.Run();
+        private static void Compare(int size)
+        {
+            Console.WriteLine($"Size {size}:");
+
+            var path = string.Format(Path, size);
+            var instanceProvider = new TextReaderInstanceProvider(new StreamReader(path));
+            var solver1 = new BrutteForceRecursiveSolver();
+            var solver2 = new BranchAndBoundSolver();
+
+            var runner = new CompareRunner(instanceProvider, solver1, solver2);
+            runner.Run();
         }
     }
 }

@@ -63,9 +63,11 @@
     <Compile Include="Solvers\BrutteForceLinqSolver.cs" />
     <Compile Include="Solvers\BrutteForceRecursiveSolver.cs" />
     <Compile Include="Solvers\BrutteForceSolver.cs" />
+    <Compile Include="Solvers\BranchAndBoundSolver.cs" />
     <Compile Include="Solvers\DynamicSolver.cs" />
     <Compile Include="Solvers\HeuristicSolver.cs" />
     <Compile Include="Solvers\ISolver.cs" />
+    <Compile Include="Tests\CompareTests.cs" />
     <Compile Include="Tests\ExtactSolversTests.cs" />
   </ItemGroup>
   <ItemGroup>

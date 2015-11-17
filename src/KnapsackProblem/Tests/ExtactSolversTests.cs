@@ -28,6 +28,12 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Tests
             TestSolver(new DynamicSolver());
         }
 
+        [TestMethod]
+        public void TestBranchAndBoundSolver()
+        {
+            TestSolver(new BranchAndBoundSolver());
+        }
+
         private void TestSolver(ISolver solver)
         {
             TestSolverFull(solver);
