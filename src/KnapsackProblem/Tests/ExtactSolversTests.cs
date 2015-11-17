@@ -25,7 +25,7 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Tests
         [TestMethod]
         public void TestBrutteForceRecursiveByWeightSolver()
         {
-            TestSolver(new BrutteForceRecursiveByWeightSolver());
+            TestSolver(new BrutteForceRecursiveSolver());
         }
 
         [TestMethod]
@@ -37,15 +37,9 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Tests
         [TestMethod]
         public void TestDynamicByPriceSolver()
         {
-            TestSolver(new DynamicByPriceSolver());
+            TestSolverOnlyPrice(new DynamicByPriceSolver());
         }
-
-        [TestMethod]
-        public void TestFptasSolver()
-        {
-            TestSolver(new FptasSolver());
-        }
-
+        
         private void TestSolver(ISolver solver)
         {
             TestSolverFull(solver);
@@ -70,7 +64,7 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Tests
 
         private void TestSolverOnlyPrice(ISolver solver)
         {
-            var instanceProvider = new TextReaderInstanceProvider(new StreamReader(string.Format(Path, 15)));
+            var instanceProvider = new TextReaderInstanceProvider(new StreamReader(string.Format(Path, 10)));
             var brutteForceSolver = new BrutteForceSolver();
 
             foreach (var instance in instanceProvider.GetInstances())

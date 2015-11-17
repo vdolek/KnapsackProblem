@@ -65,7 +65,7 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Runners
             Console.WriteLine($"    Max relative divergence: {maxRelativeDivergence:P4}");
             Console.WriteLine($"             Exact Run Time: {time1}\t(run {exactRunCount} times)");
             Console.WriteLine($"                   Run Time: {time2}\t(run {runCount} times)");
-            Console.WriteLine($"                      Ratio: {time1.Ticks / (double)time2.Ticks:P}");
+            Console.WriteLine($"                      Ratio: {time1.Ticks / (double)time2.Ticks:P2}");
             Console.WriteLine();
         }
 

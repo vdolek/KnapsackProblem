@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Model;
 
 namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solvers
@@ -12,16 +13,20 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solvers
 
         public Result GetAnyResult(Instance instance)
         {
-            var eps = 0.1;
+            var eps = 0.5;
             var maxPrice = instance.Items.Max(x => x.Price);
             var k = eps * maxPrice / instance.ItemCount;
+            var b = (int)Math.Log(k, 2);
 
-            foreach (var item in instance.Items)
+            var newInstance = instance.Clone();
+            foreach (var item in newInstance.Items)
             {
-                item.Price = (int)(item.Price / k);
+                item.Price = item.Price >> b;
             }
 
-            return dynamicByPriceSolver.GetAnyResult(instance);
+            var result = dynamicByPriceSolver.GetAnyResult(newInstance);
+            result.Price <<= b;
+            return result;
         }
     }
 }

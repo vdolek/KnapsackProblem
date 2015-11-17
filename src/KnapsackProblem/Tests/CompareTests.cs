@@ -18,19 +18,19 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Tests
         public void CompareSimpleVsRecursive()
         {
             Console.WriteLine("ahoj");
-            Compare(new BrutteForceSolver(), new BrutteForceRecursiveByWeightSolver());
+            Compare(new BrutteForceSolver(), new BrutteForceRecursiveSolver());
         }
 
         [TestMethod]
         public void CompareRecursiveVsBranchAndBound()
         {
-            Compare(new BrutteForceRecursiveByWeightSolver(), new BranchAndBoundSolver());
+            Compare(new BrutteForceRecursiveSolver(), new BranchAndBoundSolver());
         }
 
         [TestMethod]
         public void CompareRecursiveVsDynamic()
         {
-            Compare(new BrutteForceRecursiveByWeightSolver(), new DynamicByWeightSolver());
+            Compare(new BrutteForceRecursiveSolver(), new DynamicByWeightSolver());
         }
 
         private static void Compare(ISolver solver1, ISolver solver2)

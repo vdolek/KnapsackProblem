@@ -3,11 +3,11 @@
 namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solvers
 {
     /// <summary>
-    /// Solves knapsack problem by dynamic programming.
+    /// Solves knapsack problem by dynamic programming (decomposition by weight).
     /// 
     /// Uses brute force recursive algorithm.
     /// </summary>
-    public class DynamicByWeightSolver : BrutteForceRecursiveByWeightSolver
+    public class DynamicByWeightSolver : BrutteForceRecursiveSolver
     {
         private Result[,] results;
 
