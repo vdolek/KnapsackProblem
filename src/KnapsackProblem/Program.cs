@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Providers;
 using Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Runners;
 using Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solvers;
@@ -15,9 +16,10 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem
         {
             try
             {
-                foreach (var size in Sizes)
+                foreach (var size in Sizes.Skip(0).Take(1))
                 {
-                    RunForSize(size);
+                    ////RunHomework1(size);
+                    RunHomework2(size);
                 }
 
                 Console.WriteLine("Done.");
@@ -30,7 +32,7 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem
             }
         }
 
-        private static void RunForSize(int size)
+        private static void RunHomework1(int size)
         {
             Console.WriteLine($"Size {size}:");
 
@@ -39,11 +41,31 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem
             var brutteForceSolver = new BrutteForceSolver();
             var heuristicSolver = new HeuristicSolver();
 
-            ////var runner = new SimpleRunner(instanceProvider, brutteForceSolver);
-            ////var runner = new SimpleRunner(instanceProvider, heuristicSolver);
             var runner = new CompareRunner(instanceProvider, brutteForceSolver, heuristicSolver);
 
             runner.Run();
+        }
+
+        private static void RunHomework2(int size)
+        {
+            Console.WriteLine($"Size {size}:");
+
+            var path = string.Format(Path, size);
+            var instance1Provider = new TextReaderInstanceProvider(new StreamReader(path));
+            var instance2Provider = new TextReaderInstanceProvider(new StreamReader(path));
+            var brutteForceSolver = new BrutteForceSolver();
+            ////var brutteForceRecurseSolver = new BrutteForceLinqSolver();
+            var dynamicSolver = new BrutteForceRecursiveSolver();
+
+            var runner1 = new SimpleRunner(instance1Provider, brutteForceSolver);
+            ////var runner2 = new SimpleRunner(instance2Provider, brutteForceRecurseSolver);
+            var runner2 = new SimpleRunner(instance2Provider, dynamicSolver);
+
+            runner1.Run();
+
+            Console.WriteLine();
+
+            runner2.Run();
         }
     }
 }

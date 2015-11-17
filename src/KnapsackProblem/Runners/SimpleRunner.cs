@@ -42,7 +42,7 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Runners
             Console.WriteLine($"Seconds: {sw.Elapsed.TotalSeconds}");
         }
 
-        private static string GetStringRepresentaion(long num, Instance instance)
+        private static string GetStringRepresentation(long num, Instance instance)
         {
             var splitted = num.ToBinaryString()
                 .PadLeft(instance.ItemCount, '0')
@@ -55,7 +55,7 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Runners
 
         private void HandleResult(Result result)
         {
-            var itemsStr = GetStringRepresentaion(result.State, result.Instance);
+            var itemsStr = GetStringRepresentation(result.State, result.Instance);
             Console.WriteLine($"ID:{result.Instance.Id}\tP:{result.Price}\tW:{result.Weight}\tI:[{itemsStr}]");
         }
     }
