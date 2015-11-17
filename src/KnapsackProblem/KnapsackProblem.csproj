@@ -69,7 +69,6 @@
     <Compile Include="Solvers\DynamicByWeightSolver.cs" />
     <Compile Include="Solvers\HeuristicSolver.cs" />
     <Compile Include="Solvers\ISolver.cs" />
-    <Compile Include="Tests\CompareTests.cs" />
     <Compile Include="Tests\ExtactSolversTests.cs" />
   </ItemGroup>
   <ItemGroup>

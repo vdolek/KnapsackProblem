@@ -7,9 +7,9 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solvers
     /// </summary>
     public class BrutteForceSolver : ISolver
     {
-        public Result GetAnyResult(Instance instance)
+        public Result Solve(Instance instance)
         {
-            var result = new Result(instance, 0, 0, 0);
+            var result = new Result(instance);
 
             var max = 1L << instance.ItemCount;
 

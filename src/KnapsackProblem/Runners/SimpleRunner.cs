@@ -27,7 +27,7 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Runners
             var sw = Stopwatch.StartNew();
 
             // get results
-            var results = instances.Select(instance => solver.GetAnyResult(instance)).ToList().AsReadOnly();
+            var results = instances.Select(instance => solver.Solve(instance)).ToList().AsReadOnly();
 
             sw.Stop();
 

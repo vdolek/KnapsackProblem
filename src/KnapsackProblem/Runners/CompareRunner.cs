@@ -34,7 +34,7 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Runners
             while (sw1.ElapsedMilliseconds < 1000)
             {
                 ++exactRunCount;
-                exactResults = instances.Select(instance => exactSolver.GetAnyResult(instance)).ToList().AsReadOnly();
+                exactResults = instances.Select(instance => exactSolver.Solve(instance)).ToList().AsReadOnly();
             }
 
             sw1.Stop();
@@ -45,7 +45,7 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Runners
             while (sw2.ElapsedMilliseconds < 1000)
             {
                 ++runCount;
-                results = instances.Select(instance => solver.GetAnyResult(instance)).ToList().AsReadOnly();
+                results = instances.Select(instance => solver.Solve(instance)).ToList().AsReadOnly();
             }
 
             sw1.Stop();

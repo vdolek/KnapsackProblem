@@ -11,7 +11,7 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solvers
     {
         private readonly DynamicByPriceSolver dynamicByPriceSolver = new DynamicByPriceSolver();
 
-        public Result GetAnyResult(Instance instance)
+        public Result Solve(Instance instance)
         {
             var eps = 0.5;
             var maxPrice = instance.Items.Max(x => x.Price);
@@ -24,7 +24,7 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solvers
                 item.Price = item.Price >> b;
             }
 
-            var result = dynamicByPriceSolver.GetAnyResult(newInstance);
+            var result = dynamicByPriceSolver.Solve(newInstance);
             result.Price <<= b;
             return result;
         }

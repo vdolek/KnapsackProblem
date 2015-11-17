@@ -13,7 +13,7 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solvers
         private int?[,] weights;
         private Instance instance;
 
-        public Result GetAnyResult(Instance instance)
+        public Result Solve(Instance instance)
         {
             this.instance = instance;
             var sumPrices = instance.Items.Sum(x => x.Price);

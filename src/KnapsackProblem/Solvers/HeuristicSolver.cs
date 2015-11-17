@@ -8,11 +8,11 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solvers
     /// </summary>
     public class HeuristicSolver : ISolver
     {
-        public Result GetAnyResult(Instance instance)
+        public Result Solve(Instance instance)
         {
             var ordered = instance.Items.OrderByDescending(item => ((double)item.Price) / item.Weight);
 
-            var result = new Result(instance, 0, 0, 0);
+            var result = new Result(instance);
 
             foreach (var item in ordered)
             {

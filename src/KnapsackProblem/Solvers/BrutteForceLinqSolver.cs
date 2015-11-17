@@ -9,7 +9,7 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solvers
     /// </summary>
     public class BrutteForceLinqSolver : ISolver
     {
-        public Result GetAnyResult(Instance instance)
+        public Result Solve(Instance instance)
         {
             var permutations = instance.Items.GetAllPermutations();
             var possibleSolutions = permutations.Where(x => x.Sum(item => item.Weight) <= instance.Capacity);

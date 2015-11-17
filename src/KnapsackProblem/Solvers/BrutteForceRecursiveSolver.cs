@@ -9,7 +9,7 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solvers
     {
         protected Instance Instance { get; set; }
 
-        public Result GetAnyResult(Instance instance)
+        public Result Solve(Instance instance)
         {
             this.Instance = instance;
 
@@ -27,7 +27,7 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solvers
         {
             if (Instance.Items.Count == n)
             {
-                return new Result(Instance, 0, 0, 0);
+                return new Result(Instance);
             }
 
             // current item

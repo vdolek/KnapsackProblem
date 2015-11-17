@@ -4,6 +4,6 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solvers
 {
     public interface ISolver
     {
-        Result GetAnyResult(Instance instance);
+        Result Solve(Instance instance);
     }
 }

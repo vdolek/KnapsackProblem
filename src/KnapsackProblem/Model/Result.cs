@@ -9,6 +9,11 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Model
         {
         }
 
+        public Result(Instance instance)
+        {
+            Instance = instance;
+        }
+
         public Result(Instance instance, IList<Item> items)
         {
             Instance = instance;

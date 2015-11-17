@@ -12,7 +12,7 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solvers
         private Instance instance;
         private int bestPrice;
 
-        public Result GetAnyResult(Instance instance)
+        public Result Solve(Instance instance)
         {
             this.instance = instance;
             bestPrice = 0;
@@ -25,14 +25,14 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solvers
         {
             if (instance.Items.Count == n)
             {
-                return new Result(instance, 0, 0, 0);
+                return new Result(instance);
             }
 
             // when i cannot create better solution
             var maxAvailablePrice = currentPrice + instance.Items.Skip(n).Sum(x => x.Price);
             if (maxAvailablePrice <= bestPrice)
             {
-                return new Result(instance, 0, 0, 0);
+                return new Result(instance);
             }
 
             // current item

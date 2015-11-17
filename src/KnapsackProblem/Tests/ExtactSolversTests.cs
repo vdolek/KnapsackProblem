@@ -53,8 +53,8 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Tests
 
             foreach (var instance in instanceProvider.GetInstances())
             {
-                var res1 = brutteForceSolver.GetAnyResult(instance);
-                var res2 = solver.GetAnyResult(instance);
+                var res1 = brutteForceSolver.Solve(instance);
+                var res2 = solver.Solve(instance);
 
                 Assert.AreEqual(res1.Price, res2.Price, $"Prices are not equal for instance ${instance.Id}.");
                 Assert.AreEqual(res1.Weight, res2.Weight, $"Prices are not equal for instance ${instance.Id}.");
@@ -69,8 +69,8 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Tests
 
             foreach (var instance in instanceProvider.GetInstances())
             {
-                var res1 = brutteForceSolver.GetAnyResult(instance);
-                var res2 = solver.GetAnyResult(instance);
+                var res1 = brutteForceSolver.Solve(instance);
+                var res2 = solver.Solve(instance);
 
                 Assert.AreEqual(res1.Price, res2.Price, $"Prices are not equal for instance ${instance.Id}.");
             }
