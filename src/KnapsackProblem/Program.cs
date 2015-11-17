@@ -52,7 +52,7 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem
 
             var path = string.Format(Path, size);
             var instanceProvider = new TextReaderInstanceProvider(new StreamReader(path));
-            var solver = new BrutteForceRecursiveSolver();
+            var solver = new BrutteForceRecursiveByWeightSolver();
 
             var runner = new SimpleRunner(instanceProvider, solver);
             runner.Run();
@@ -64,8 +64,8 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem
 
             var path = string.Format(Path, size);
             var instanceProvider = new TextReaderInstanceProvider(new StreamReader(path));
-            var solver1 = new BrutteForceRecursiveSolver();
-            var solver2 = new BranchAndBoundSolver();
+            var solver1 = new DynamicByPriceSolver();
+            var solver2 = new FptasSolver();
 
             var runner = new CompareRunner(instanceProvider, solver1, solver2);
             runner.Run();

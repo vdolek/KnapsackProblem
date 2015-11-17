@@ -5,7 +5,7 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solvers
     /// <summary>
     /// Solves knapsack problem by recursion.
     /// </summary>
-    public class BrutteForceRecursiveSolver : ISolver
+    public class BrutteForceRecursiveByWeightSolver : ISolver
     {
         protected Instance Instance { get; set; }
 

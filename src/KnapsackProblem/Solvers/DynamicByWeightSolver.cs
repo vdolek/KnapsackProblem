@@ -7,7 +7,7 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solvers
     /// 
     /// Uses brute force recursive algorithm.
     /// </summary>
-    public class DynamicSolver : BrutteForceRecursiveSolver
+    public class DynamicByWeightSolver : BrutteForceRecursiveByWeightSolver
     {
         private Result[,] results;
 

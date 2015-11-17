@@ -61,10 +61,12 @@
     <Compile Include="Runners\IRunner.cs" />
     <Compile Include="Runners\SimpleRunner.cs" />
     <Compile Include="Solvers\BrutteForceLinqSolver.cs" />
-    <Compile Include="Solvers\BrutteForceRecursiveSolver.cs" />
+    <Compile Include="Solvers\BrutteForceRecursiveByWeightSolver.cs" />
+    <Compile Include="Solvers\DynamicByPriceSolver.cs" />
+    <Compile Include="Solvers\FptasSolver.cs" />
     <Compile Include="Solvers\BrutteForceSolver.cs" />
     <Compile Include="Solvers\BranchAndBoundSolver.cs" />
-    <Compile Include="Solvers\DynamicSolver.cs" />
+    <Compile Include="Solvers\DynamicByWeightSolver.cs" />
     <Compile Include="Solvers\HeuristicSolver.cs" />
     <Compile Include="Solvers\ISolver.cs" />
     <Compile Include="Tests\CompareTests.cs" />

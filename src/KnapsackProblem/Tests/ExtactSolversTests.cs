@@ -19,13 +19,13 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Tests
         [TestMethod]
         public void TestBrutteForceRecursiveSolver()
         {
-            TestSolver(new BrutteForceRecursiveSolver());
+            TestSolver(new BrutteForceRecursiveByWeightSolver());
         }
 
         [TestMethod]
-        public void TestDynamicSolver()
+        public void TestDynamicByWeightSolver()
         {
-            TestSolver(new DynamicSolver());
+            TestSolver(new DynamicByWeightSolver());
         }
 
         [TestMethod]
