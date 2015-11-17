@@ -2,6 +2,9 @@
 
 namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solvers
 {
+    /// <summary>
+    /// Solves knapsack problem by bit array.
+    /// </summary>
     public class BrutteForceSolver : ISolver
     {
         public Result GetAnyResult(Instance instance)

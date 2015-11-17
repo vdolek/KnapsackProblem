@@ -2,6 +2,9 @@
 
 namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solvers
 {
+    /// <summary>
+    /// Solves knapsack problem by recursion.
+    /// </summary>
     public class BrutteForceRecursiveSolver : ISolver
     {
         public Instance Instance { get; set; }
@@ -15,7 +18,7 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solvers
             return result;
         }
 
-        private Result SolveKnapsack(int capacity, int n)
+        protected virtual Result SolveKnapsack(int capacity, int n)
         {
             if (Instance.Items.Count == n)
             {

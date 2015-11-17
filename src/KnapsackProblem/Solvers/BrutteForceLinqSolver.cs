@@ -4,6 +4,9 @@ using Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Model;
 
 namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solvers
 {
+    /// <summary>
+    /// Solver Knapsack problem by (lazy) generating all permutation by LINQ.
+    /// </summary>
     public class BrutteForceLinqSolver : ISolver
     {
         public Result GetAnyResult(Instance instance)

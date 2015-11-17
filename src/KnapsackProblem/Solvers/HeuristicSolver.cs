@@ -1,9 +1,11 @@
 ﻿using System.Linq;
-using System.Numerics;
 using Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Model;
 
 namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solvers
 {
+    /// <summary>
+    /// Solves knapsack problem by simple heuristic.
+    /// </summary>
     public class HeuristicSolver : ISolver
     {
         public Result GetAnyResult(Instance instance)
