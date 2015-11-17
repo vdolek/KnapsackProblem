@@ -22,15 +22,15 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Tests
         }
 
         [TestMethod]
-        public void CompareRecursiveVsDynamic()
-        {
-            Compare(new BrutteForceRecursiveByWeightSolver(), new DynamicByWeightSolver());
-        }
-
-        [TestMethod]
         public void CompareRecursiveVsBranchAndBound()
         {
             Compare(new BrutteForceRecursiveByWeightSolver(), new BranchAndBoundSolver());
+        }
+
+        [TestMethod]
+        public void CompareRecursiveVsDynamic()
+        {
+            Compare(new BrutteForceRecursiveByWeightSolver(), new DynamicByWeightSolver());
         }
 
         private static void Compare(ISolver solver1, ISolver solver2)

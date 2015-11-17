@@ -17,7 +17,13 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Tests
         }
 
         [TestMethod]
-        public void TestBrutteForceRecursiveSolver()
+        public void TestBranchAndBoundSolver()
+        {
+            TestSolver(new BranchAndBoundSolver());
+        }
+
+        [TestMethod]
+        public void TestBrutteForceRecursiveByWeightSolver()
         {
             TestSolver(new BrutteForceRecursiveByWeightSolver());
         }
@@ -29,9 +35,15 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Tests
         }
 
         [TestMethod]
-        public void TestBranchAndBoundSolver()
+        public void TestDynamicByPriceSolver()
         {
-            TestSolver(new BranchAndBoundSolver());
+            TestSolver(new DynamicByPriceSolver());
+        }
+
+        [TestMethod]
+        public void TestFptasSolver()
+        {
+            TestSolver(new FptasSolver());
         }
 
         private void TestSolver(ISolver solver)
