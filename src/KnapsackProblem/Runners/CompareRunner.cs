@@ -34,8 +34,9 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Runners
             while (sw1.ElapsedMilliseconds < 1000)
             {
                 ++exactRunCount;
-                exactResults = instances.Select(instance => exactSolver.GetAnyResult(instance)).ToList().AsReadOnly();
+                exactResults = instances.AsParallel().Select(instance => exactSolver.GetAnyResult(instance)).ToList().AsReadOnly();
             }
+
             sw1.Stop();
 
             ReadOnlyCollection<Result> results = null;
@@ -46,19 +47,19 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Runners
                 ++runCount;
                 results = instances.Select(instance => solver.GetAnyResult(instance)).ToList().AsReadOnly();
             }
-            sw1.Stop();
 
+            sw1.Stop();
 
             // handle all results
             var relativeDivergences =
                 exactResults
-                    .Zip(results, (er, r) => new {er, r})
-                    .Select(i => (i.er.Price - i.r.Price)/(double) i.er.Price).ToList().AsReadOnly();
+                    .Zip(results, (er, r) => new { er, r })
+                    .Select(i => (i.er.Price - i.r.Price) / (double)i.er.Price).ToList().AsReadOnly();
             var averageRelativeDivergence = relativeDivergences.Average(x => x);
             var maxRelativeDivergence = relativeDivergences.Max(x => x);
 
-            var time1 = new TimeSpan((long) (sw1.ElapsedMilliseconds * 10000 / (double) exactRunCount));
-            var time2 = new TimeSpan((long) (sw2.ElapsedMilliseconds * 10000 / (double) runCount));
+            var time1 = new TimeSpan((long)(sw1.ElapsedMilliseconds * 10000 / (double)exactRunCount));
+            var time2 = new TimeSpan((long)(sw2.ElapsedMilliseconds * 10000 / (double)runCount));
 
             Console.WriteLine($"Average relative divergence: {averageRelativeDivergence}");
             Console.WriteLine($"    Max relative divergence: {maxRelativeDivergence}");
@@ -71,7 +72,9 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Runners
         private void HanldeResults(ReadOnlyCollection<Result> exactResults, ReadOnlyCollection<Result> results)
         {
             if (exactResults.Count != results.Count)
+            {
                 throw new ApplicationException("Result sets are not the same size.");
+            }
 
             var divergences = new List<double>(exactResults.Count);
 
@@ -83,7 +86,7 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Runners
                 var divergence = (exactResult.Price - result.Price) / (double)exactResult.Price;
                 divergences.Add(divergence);
 
-                //Console.WriteLine($"ID:{result.Instance.Id}\tExactPrice:{exactResult.Price}\tPrice:{result.Price}\tDivergence:{divergence}");
+                ////Console.WriteLine($"ID:{result.Instance.Id}\tExactPrice:{exactResult.Price}\tPrice:{result.Price}\tDivergence:{divergence}");
             }
 
             var averageRelativeDivergence = divergences.Average(d => d);

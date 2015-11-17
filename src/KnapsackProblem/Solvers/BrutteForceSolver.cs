@@ -33,12 +33,14 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solvers
         {
             var partResult = new PartResult();
 
-            for (var i = 0; ; ++i)
+            for (var i = 0;; ++i)
             {
                 var num = 1L << i;
 
                 if (num > state)
+                {
                     break;
+                }
 
                 if ((state & num) != 0)
                 {

@@ -42,21 +42,21 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Runners
             Console.WriteLine($"Seconds: {sw.Elapsed.TotalSeconds}");
         }
 
-        private void HandleResult(Result result)
-        {
-            var itemsStr = GetStringRepresentaion(result.State, result.Instance);
-            Console.WriteLine($"ID:{result.Instance.Id}\tP:{result.Price}\tW:{result.Weight}\tI:[{itemsStr}]");
-        }
-
         private static string GetStringRepresentaion(long num, Instance instance)
         {
             var splitted = num.ToBinaryString()
                 .PadLeft(instance.ItemCount, '0')
                 .Reverse()
-                .Select(ch => new String(new[] { ch, ' ' }));
-            var res = String.Join("", splitted);
+                .Select(ch => new string(new[] { ch, ' ' }));
+            var res = string.Join(string.Empty, splitted);
             res = res.Substring(0, res.Length - 1);
             return res;
+        }
+
+        private void HandleResult(Result result)
+        {
+            var itemsStr = GetStringRepresentaion(result.State, result.Instance);
+            Console.WriteLine($"ID:{result.Instance.Id}\tP:{result.Price}\tW:{result.Weight}\tI:[{itemsStr}]");
         }
     }
 }

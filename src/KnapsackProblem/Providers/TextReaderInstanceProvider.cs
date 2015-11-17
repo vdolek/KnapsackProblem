@@ -39,8 +39,8 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Providers
                     var item = new Item
                     {
                         Index = i,
-                        Weight = int.Parse(splitted[3 + 2*i]),
-                        Price = int.Parse(splitted[4 + 2*i])
+                        Weight = int.Parse(splitted[3 + 2 * i]),
+                        Price = int.Parse(splitted[4 + 2 * i])
                     };
 
                     items.Add(item);
