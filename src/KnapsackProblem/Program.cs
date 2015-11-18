@@ -18,9 +18,9 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem
             {
                 foreach (var size in Sizes)
                 {
-                    //RunHomework1(size);
-                    RunHomework2(size);
-                    //Compare(size);
+                    RunHomework1(size);
+                    ////RunHomework2(size);
+                    ////RunHomework2Compare(size);
                 }
 
                 Console.WriteLine("Done.");
@@ -53,25 +53,26 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem
 
             var path = string.Format(Path, size);
             var instanceProvider = new TextReaderInstanceProvider(new StreamReader(path));
-            //var solver = new BrutteForceRecursiveSolver();
-            //var solver = new BranchAndBoundSolver();
-            //var solver = new DynamicByWeightSolver();
+            ////var solver = new BrutteForceRecursiveSolver();
+            ////var solver = new BranchAndBoundSolver();
+            ////var solver = new DynamicByWeightSolver();
             var solver = new DynamicByPriceSolver();
-            //var solver = new FptasSolver(0.5);
-            //var solver = new FptasSolver(0.1);
 
             var runner = new SimpleRunner(instanceProvider, solver);
             runner.Run();
         }
 
-        private static void Compare(int size)
+        private static void RunHomework2Compare(int size)
         {
             Console.WriteLine($"Size {size}:");
 
             var path = string.Format(Path, size);
             var instanceProvider = new TextReaderInstanceProvider(new StreamReader(path));
-            var solver1 = new DynamicByPriceSolver();
-            var solver2 = new FptasSolver(0.5);
+            ////var solver1 = new DynamicByPriceSolver();
+            var solver1 = new DynamicByWeightSolver();
+            ////var solver2 = new FptasSolver(0.1);
+            ////var solver2 = new FptasSolver(0.2);
+            var solver2 = new FptasSolver(0.9);
 
             var runner = new CompareRunner(instanceProvider, solver1, solver2);
             runner.Run();

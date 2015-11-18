@@ -21,6 +21,10 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solvers
         {
             var maxPrice = instance.Items.Max(x => x.Price);
             var k = (int)(epsilon * maxPrice / instance.ItemCount);
+            if (k <= 1)
+            {
+                k = 1;
+            }
 
             // get FPTAS instance with reduced prices
             var fptasInstance = instance.Clone();

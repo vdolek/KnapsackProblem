@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Extensions;
@@ -28,11 +29,13 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Runners
 
             // get results
             var runCount = 0;
+            IList<Result> results;
             while (sw.ElapsedMilliseconds < 1000)
             {
                 runCount++;
-                var results = instances.Select(instance => solver.Solve(instance)).ToList().AsReadOnly();
+                results = instances.Select(instance => solver.Solve(instance)).ToList().AsReadOnly();
             }
+
             sw.Stop();
 
             // handle all results
@@ -41,7 +44,6 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Runners
             ////    HandleResult(result);
             ////}
 
-            //var elapsed = new TimeSpan(sw.ElapsedTicks / runCount);
             var time = new TimeSpan((long)(sw.ElapsedMilliseconds * 10000 / (double)runCount));
 
             Console.WriteLine();
