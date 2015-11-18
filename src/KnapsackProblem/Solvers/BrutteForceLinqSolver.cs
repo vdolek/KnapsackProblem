@@ -12,17 +12,25 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solvers
         public Result Solve(Instance instance)
         {
             var permutations = instance.Items.GetAllPermutations();
-            var possibleSolutions = permutations.Where(x => x.Sum(item => item.Weight) <= instance.Capacity);
+            var possibleSolutions = permutations
+                .Select(perm => perm.ToArray())
+                .Select(perm => new
+                {
+                    permutation = perm,
+                    weight = perm.Sum(x => x.Weight),
+                    price = perm.Sum(x => x.Price)
+                })
+                .Where(x => x.weight <= instance.Capacity);
 
             var maxPrice = 0;
             var solution = Enumerable.Empty<Item>();
             foreach (var possibleSolution in possibleSolutions)
             {
-                var price = possibleSolution.Sum(item => item.Price);
+                var price = possibleSolution.price;
                 if (price > maxPrice)
                 {
                     maxPrice = price;
-                    solution = possibleSolution;
+                    solution = possibleSolution.permutation;
                 }
             }
 
