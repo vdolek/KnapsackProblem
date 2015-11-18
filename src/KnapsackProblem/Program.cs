@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Providers;
 using Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Runners;
 using Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solvers;
@@ -15,11 +16,11 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem
         {
             try
             {
-                foreach (var size in Sizes)
+                foreach (var size in Sizes.Skip(7))
                 {
                     //RunHomework1(size);
-                    //RunHomework2(size);
-                    Compare(size);
+                    RunHomework2(size);
+                    //Compare(size);
                 }
 
                 Console.WriteLine("Done.");
@@ -55,9 +56,9 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem
             //var solver = new BrutteForceRecursiveSolver();
             //var solver = new BranchAndBoundSolver();
             //var solver = new DynamicByWeightSolver();
-            //var solver = new DynamicByPriceSolver();
+            var solver = new DynamicByPriceSolver();
             //var solver = new FptasSolver(0.5);
-            var solver = new FptasSolver(0.1);
+            //var solver = new FptasSolver(0.1);
 
             var runner = new SimpleRunner(instanceProvider, solver);
             runner.Run();
