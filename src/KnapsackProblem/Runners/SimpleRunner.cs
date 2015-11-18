@@ -27,19 +27,27 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Runners
             var sw = Stopwatch.StartNew();
 
             // get results
-            var results = instances.Select(instance => solver.Solve(instance)).ToList().AsReadOnly();
-
+            var runCount = 0;
+            while (sw.ElapsedMilliseconds < 1000)
+            {
+                runCount++;
+                var results = instances.Select(instance => solver.Solve(instance)).ToList().AsReadOnly();
+            }
             sw.Stop();
 
             // handle all results
-            foreach (var result in results)
-            {
-                HandleResult(result);
-            }
+            ////foreach (var result in results)
+            ////{
+            ////    HandleResult(result);
+            ////}
+
+            //var elapsed = new TimeSpan(sw.ElapsedTicks / runCount);
+            var time = new TimeSpan((long)(sw.ElapsedMilliseconds * 10000 / (double)runCount));
 
             Console.WriteLine();
-            Console.WriteLine($"Time:    {sw.Elapsed}");
-            Console.WriteLine($"Seconds: {sw.Elapsed.TotalSeconds}");
+            Console.WriteLine($"Run count:  {runCount}");
+            Console.WriteLine($"Time:       {time}");
+            Console.WriteLine($"Seconds:    {time.TotalSeconds}");
         }
 
         private static string GetStringRepresentation(long num, Instance instance)

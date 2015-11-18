@@ -18,8 +18,8 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem
                 foreach (var size in Sizes)
                 {
                     //RunHomework1(size);
-                    //RunHomework2(size);
-                    Compare(size);
+                    RunHomework2(size);
+                    //Compare(size);
                 }
 
                 Console.WriteLine("Done.");
@@ -52,8 +52,11 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem
 
             var path = string.Format(Path, size);
             var instanceProvider = new TextReaderInstanceProvider(new StreamReader(path));
-            //var solver = new FptasSolver();
             var solver = new BrutteForceRecursiveSolver();
+            //var solver = new BranchAndBoundSolver();
+            //var solver = new DynamicByWeightSolver();
+            //var solver = new DynamicByPriceSolver();
+            //var solver = new FptasSolver();
 
             var runner = new SimpleRunner(instanceProvider, solver);
             runner.Run();
