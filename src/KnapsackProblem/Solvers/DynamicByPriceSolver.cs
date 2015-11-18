@@ -10,36 +10,32 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solvers
     /// </summary>
     public class DynamicByPriceSolver : ISolver
     {
-        private int?[,] weights;
+        private Result[,] table;
         private Instance instance;
 
         public Result Solve(Instance instance)
         {
             this.instance = instance;
             var sumPrices = instance.Items.Sum(x => x.Price);
-            weights = new int?[instance.ItemCount + 1, sumPrices + 1];
-            weights[0, 0] = 0;
+            table = new Result[instance.ItemCount + 1, sumPrices + 1];
+            table[0, 0] = new Result(instance);
 
             SolveKnapsack(0, 0);
 
-            var bestPrice = 0;
-            var bestWeight = 0;
-            for (var n = 0; n < weights.GetLength(0); ++n)
+            var bestResult = new Result(instance);
+            for (var n = 0; n < table.GetLength(0); ++n)
             {
-                for (var p = 0; p < weights.GetLength(1); ++p)
+                for (var p = 0; p < table.GetLength(1); ++p)
                 {
-                    var weight = weights[n, p];
-                    if (p > bestPrice && weight.HasValue && weight <= instance.Capacity)
+                    var result = table[n, p];
+                    if (p > bestResult.Price && result != null && result.Weight <= instance.Capacity)
                     {
-                        bestPrice = p;
-                        bestWeight = weight.Value;
+                        bestResult = result;
                     }
                 }
             }
 
-            // TODO result state
-            var res = new Result(instance, 0, bestWeight, bestPrice);
-            return res;
+            return bestResult;
         }
 
         private void SolveKnapsack(int n, int price)
@@ -49,30 +45,34 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solvers
                 return;
             }
 
-            var weight = weights[n, price].Value;
+            var currentResult = table[n, price];
             
             var item = instance.Items[n];
 
             // item is not contained
             {
-                var oldWeight = weights[n + 1, price];
-                if (!oldWeight.HasValue || oldWeight.Value > weight)
+                var oldResult = table[n + 1, price];
+                if (oldResult == null || oldResult.Weight > currentResult.Weight)
                 {
-                    weights[n + 1, price] = weight;
+                    var newResult = currentResult.Clone();
+                    table[n + 1, price] = newResult;
                     SolveKnapsack(n + 1, price);
                 }
             }
 
             // item is contained
-            var newPrice = price + item.Price;
             {
-                var oldWeight = weights[n + 1, newPrice];
-                var newWeight = weight + item.Weight;
-                if (!oldWeight.HasValue || oldWeight.Value > newWeight)
+                var newPrice = price + item.Price;
+                var oldResult = table[n + 1, newPrice];
+                var newWeight = currentResult.Weight + item.Weight;
+                if (oldResult == null || oldResult.Weight > newWeight)
                 {
-                    weights[n + 1, newPrice] = newWeight;
+                    var newResult = currentResult.Clone();
+                    newResult.Price = newPrice;
+                    newResult.Weight = newWeight;
+                    newResult.State |= 1L << n;
+                    table[n + 1, newPrice] = newResult;
                     SolveKnapsack(n + 1, newPrice);
-
                 }
             }
         }

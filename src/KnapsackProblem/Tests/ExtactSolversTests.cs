@@ -37,7 +37,7 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Tests
         [TestMethod]
         public void TestDynamicByPriceSolver()
         {
-            TestSolverOnlyPrice(new DynamicByPriceSolver());
+            TestSolver(new DynamicByPriceSolver());
         }
         
         private void TestSolver(ISolver solver)
