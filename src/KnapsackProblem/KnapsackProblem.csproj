@@ -73,40 +73,40 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="Data\knap_10.inst.dat">
+    <None Include="Data\Edux\knap_10.inst.dat">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Data\knap_15.inst.dat">
+    <None Include="Data\Edux\knap_15.inst.dat">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Data\knap_20.inst.dat">
+    <None Include="Data\Edux\knap_20.inst.dat">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Data\knap_22.inst.dat">
+    <None Include="Data\Edux\knap_22.inst.dat">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Data\knap_25.inst.dat">
+    <None Include="Data\Edux\knap_25.inst.dat">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Data\knap_27.inst.dat">
+    <None Include="Data\Edux\knap_27.inst.dat">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Data\knap_30.inst.dat">
+    <None Include="Data\Edux\knap_30.inst.dat">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Data\knap_32.inst.dat">
+    <None Include="Data\Edux\knap_32.inst.dat">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Data\knap_35.inst.dat">
+    <None Include="Data\Edux\knap_35.inst.dat">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Data\knap_37.inst.dat">
+    <None Include="Data\Edux\knap_37.inst.dat">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Data\knap_4.inst.dat">
+    <None Include="Data\Edux\knap_4.inst.dat">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Data\knap_40.inst.dat">
+    <None Include="Data\Edux\knap_40.inst.dat">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />

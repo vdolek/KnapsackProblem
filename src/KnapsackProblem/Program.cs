@@ -9,10 +9,15 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem
 {
     public class Program
     {
-        private const string Path = @".\Data\knap_{0}.inst.dat";
+        private const string Path = @".\Data\Edux\knap_{0}.inst.dat";
         private static readonly int[] Sizes = { 4, 10, 15, 20, 22, 25, 27, 30, 32, 35, 37, 40 };
 
         public static void Main(string[] args)
+        {
+            RunHomework1Or2();
+        }
+
+        private static void RunHomework1Or2()
         {
             try
             {
