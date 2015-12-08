@@ -47,7 +47,7 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Runners
             ReadOnlyCollection<Result> results = null;
             var sw2 = Stopwatch.StartNew();
             var runCount = 0;
-            while (sw2.ElapsedMilliseconds < 1000)
+            while (sw2.ElapsedMilliseconds < 10)
             {
                 ++runCount;
                 results = instances.Select(instance => solver.Solve(instance)).ToList().AsReadOnly();

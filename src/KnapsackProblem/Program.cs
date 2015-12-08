@@ -96,8 +96,8 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem
         {
             var solvers = new ISolver[]
             {
-                //new BrutteForceRecursiveSolver(),
-                //new BranchAndBoundSolver(),
+                new BrutteForceRecursiveSolver(),
+                new BranchAndBoundSolver(),
                 new HeuristicSolver(),
                 new DynamicByPriceSolver(),
                 new DynamicByWeightSolver()
@@ -114,7 +114,7 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem
                 SizePriority = SizePriority.Stability
             };
 
-            // run for different weights
+            //// run for different max weights
             var maxWeights = new[] { 50, 100, 150, 200 };
             foreach (var maxWeight in maxWeights)
             {
@@ -122,6 +122,40 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem
                 parameters.MaxWeight = maxWeight;
 
                 RunForParameters(parameters, $"Max Weight: {maxWeight}", solvers);
+            }
+
+            // run for different max prices
+            var maxPrices = new[] { 50, 100, 150, 200 };
+            foreach (var maxPrice in maxPrices)
+            {
+                var parameters = defaultParameters.Clone();
+                parameters.MaxPrice = maxPrice;
+
+                RunForParameters(parameters, $"Max Price: {maxPrice}", solvers);
+            }
+
+            // run for different ratios
+            var ratios = new[] { 0.2m, 0.5m, 0.8m, 1m };
+            foreach (var ratio in ratios)
+            {
+                var parameters = defaultParameters.Clone();
+                parameters.SumWeightToCapacityRatio = ratio;
+
+                RunForParameters(parameters, $"Sum Weight To Capacity Ratio: {ratio}", solvers);
+            }
+
+            // run for different k exponents
+            var exponents = new[] { 0.2m, 0.5m, 0.8m, 1m, 2m, 5m };
+            foreach (var exponent in exponents)
+            {
+                var parameters = defaultParameters.Clone();
+                parameters.ExponentK = exponent;
+
+                parameters.SizePriority = SizePriority.MoreSmallThings;
+                RunForParameters(parameters, $"Exponent K: {exponent} (More Small Things)", solvers);
+
+                parameters.SizePriority = SizePriority.MoreBigThings;
+                RunForParameters(parameters, $"Exponent K: {exponent} (More Big Things)", solvers);
             }
 
             Console.ReadLine();

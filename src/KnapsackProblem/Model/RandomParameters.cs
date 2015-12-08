@@ -1,5 +1,12 @@
 ﻿namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Model
 {
+    public enum SizePriority
+    {
+        MoreSmallThings = -1,
+        Stability = 0,
+        MoreBigThings = 1,
+    }
+
     public class RandomParameters
     {
         public int NumberOfItems { get; set; }
@@ -20,12 +27,5 @@
         {
             return (RandomParameters)MemberwiseClone();
         }
-    }
-
-    public enum SizePriority
-    {
-        MoreSmallThings = -1,
-        Stability = 0,
-        MoreBigThings = 1,
     }
 }
