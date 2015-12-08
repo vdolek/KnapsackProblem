@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
-using System.Linq;
+using System.Threading;
+using Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Model;
 using Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Providers;
 using Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Runners;
 using Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solvers;
@@ -14,7 +16,8 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem
 
         public static void Main(string[] args)
         {
-            RunHomework1Or2();
+            ////RunHomework1Or2();
+            RunHomework3();
         }
 
         #region HW 1 ang 2
@@ -84,7 +87,73 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem
             var runner = new CompareRunner(instanceProvider, solver1, solver2);
             runner.Run();
         }
-    }
 
-    #endregion
+        #endregion
+
+        #region HW 3
+
+        private static void RunHomework3()
+        {
+            var solvers = new ISolver[]
+            {
+                //new BrutteForceRecursiveSolver(),
+                //new BranchAndBoundSolver(),
+                new HeuristicSolver(),
+                new DynamicByPriceSolver(),
+                new DynamicByWeightSolver()
+            };
+
+            var defaultParameters = new RandomParameters
+            {
+                NumberOfInstances = 50,
+                NumberOfItems = 25,
+                MaxPrice = 100,
+                MaxWeight = 100,
+                SumWeightToCapacityRatio = 0.5m,
+                ExponentK = 1,
+                SizePriority = SizePriority.Stability
+            };
+
+            // run for different weights
+            var maxWeights = new[] { 50, 100, 150, 200 };
+            foreach (var maxWeight in maxWeights)
+            {
+                var parameters = defaultParameters.Clone();
+                parameters.MaxWeight = maxWeight;
+
+                RunForParameters(parameters, $"Max Weight: {maxWeight}", solvers);
+            }
+
+            Console.ReadLine();
+        }
+
+        private static void RunForParameters(RandomParameters randomParameters, string message, IList<ISolver> solvers)
+        {
+            Console.WriteLine(new string('=', 64));
+            Console.WriteLine(message);
+
+            var instanceProvider = new RandomInstanceProvider(randomParameters);
+            var instances = instanceProvider.GetInstances();
+
+            Console.WriteLine(new string('=', 64));
+
+            RunForAllRunners(instances, solvers);
+            Console.WriteLine();
+            Console.WriteLine();
+        }
+
+        private static void RunForAllRunners(IList<Instance> instances, IList<ISolver> solvers)
+        {
+            foreach (var solver in solvers)
+            {
+                Console.WriteLine(solver.GetType().Name);
+                Console.WriteLine(new string('-', 48));
+
+                var runner = new CompareRunner(instances, new DynamicByWeightSolver(), solver);
+                runner.Run();
+            }
+        }
+
+        #endregion
+    }
 }
