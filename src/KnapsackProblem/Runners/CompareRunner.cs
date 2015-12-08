@@ -61,6 +61,13 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Runners
             var time1 = new TimeSpan((long)(sw1.ElapsedMilliseconds * 10000 / (double)exactRunCount));
             var time2 = new TimeSpan((long)(sw2.ElapsedMilliseconds * 10000 / (double)runCount));
 
+            foreach (var x in exactResults
+                    .Zip(results, (er, r) => new { a = er.Price, b = r.Price }))
+            {
+                Console.WriteLine($"{x.a} - {x.b} = {x.a - x.b}");
+            }
+
+            Console.WriteLine();
             Console.WriteLine($"Average relative divergence: {averageRelativeDivergence}");
             Console.WriteLine($"    Max relative divergence: {maxRelativeDivergence}");
             Console.WriteLine($"             Exact Run Time: {time1}\t(run {exactRunCount} times)");

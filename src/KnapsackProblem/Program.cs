@@ -18,9 +18,9 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem
             {
                 foreach (var size in Sizes)
                 {
-                    RunHomework1(size);
+                    ////RunHomework1(size);
                     ////RunHomework2(size);
-                    ////RunHomework2Compare(size);
+                    RunHomework2Compare(size);
                 }
 
                 Console.WriteLine("Done.");
@@ -72,7 +72,7 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem
             var solver1 = new DynamicByWeightSolver();
             ////var solver2 = new FptasSolver(0.1);
             ////var solver2 = new FptasSolver(0.2);
-            var solver2 = new FptasSolver(0.9);
+            var solver2 = new FptasSolver(0.5);
 
             var runner = new CompareRunner(instanceProvider, solver1, solver2);
             runner.Run();

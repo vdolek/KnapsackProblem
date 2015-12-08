@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Model;
 
 namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solvers
@@ -40,7 +41,10 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solvers
             var result = new Result
             {
                 Instance = instance,
-                Price = instance.Items.Where(x => ((1L << x.Index) & dynamicResult.State) != 0).Sum(x => x.Price),
+                Price = instance.Items
+                    .Where(x => ((1L << x.Index) & dynamicResult.State) != 0)
+                    .Sum(x => x.Price),
+                ////Price = dynamicResult.Price * k,
                 Weight = dynamicResult.Weight,
                 State = dynamicResult.State
             };
