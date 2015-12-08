@@ -17,6 +17,8 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem
             RunHomework1Or2();
         }
 
+        #region HW 1 ang 2
+
         private static void RunHomework1Or2()
         {
             try
@@ -83,4 +85,6 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem
             runner.Run();
         }
     }
+
+    #endregion
 }
