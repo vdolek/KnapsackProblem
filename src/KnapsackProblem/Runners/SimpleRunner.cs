@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Extensions;
@@ -10,29 +11,34 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Runners
 {
     public class SimpleRunner : IRunner
     {
-        private readonly IInstanceProvider instanceProvider;
+        private readonly IList<Instance> instances;
         private readonly ISolver solver;
 
         public SimpleRunner(IInstanceProvider instanceProvider, ISolver solver)
         {
-            this.instanceProvider = instanceProvider;
+            this.solver = solver;
+            instances = instanceProvider.GetInstances();
+        }
+
+        public SimpleRunner(IList<Instance> instances, ISolver solver)
+        {
+            this.instances = instances;
             this.solver = solver;
         }
 
         public void Run()
         {
-            // get instances
-            var instances = instanceProvider.GetInstances();
-
             var sw = Stopwatch.StartNew();
 
             // get results
             var runCount = 0;
+            IList<Result> results;
             while (sw.ElapsedMilliseconds < 1000)
             {
                 runCount++;
-                var results = instances.Select(instance => solver.Solve(instance)).ToList().AsReadOnly();
+                results = instances.Select(instance => solver.Solve(instance)).ToList().AsReadOnly();
             }
+
             sw.Stop();
 
             // handle all results
@@ -41,13 +47,12 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Runners
             ////    HandleResult(result);
             ////}
 
-            //var elapsed = new TimeSpan(sw.ElapsedTicks / runCount);
             var time = new TimeSpan((long)(sw.ElapsedMilliseconds * 10000 / (double)runCount));
 
-            Console.WriteLine();
             Console.WriteLine($"Run count:  {runCount}");
             Console.WriteLine($"Time:       {time}");
             Console.WriteLine($"Seconds:    {time.TotalSeconds}");
+            Console.WriteLine();
         }
 
         private static string GetStringRepresentation(long num, Instance instance)

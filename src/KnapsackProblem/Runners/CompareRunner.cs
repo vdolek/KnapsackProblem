@@ -11,22 +11,27 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Runners
 {
     public class CompareRunner : IRunner
     {
-        private readonly IInstanceProvider instanceProvider;
+        private readonly IList<Instance> instances;
         private readonly ISolver exactSolver;
         private readonly ISolver solver;
 
         public CompareRunner(IInstanceProvider instanceProvider, ISolver exactSolver, ISolver solver)
         {
-            this.instanceProvider = instanceProvider;
+            this.exactSolver = exactSolver;
+            this.solver = solver;
+
+            instances = instanceProvider.GetInstances();
+        }
+
+        public CompareRunner(IList<Instance> instances, ISolver exactSolver, ISolver solver)
+        {
+            this.instances = instances;
             this.exactSolver = exactSolver;
             this.solver = solver;
         }
 
         public void Run()
         {
-            // get instances
-            var instances = instanceProvider.GetInstances();
-
             // get results
             IList<Result> exactResults = null;
             var sw1 = Stopwatch.StartNew();
@@ -42,7 +47,7 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Runners
             ReadOnlyCollection<Result> results = null;
             var sw2 = Stopwatch.StartNew();
             var runCount = 0;
-            while (sw2.ElapsedMilliseconds < 1000)
+            while (sw2.ElapsedMilliseconds < 10)
             {
                 ++runCount;
                 results = instances.Select(instance => solver.Solve(instance)).ToList().AsReadOnly();
@@ -58,14 +63,21 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Runners
             var averageRelativeDivergence = relativeDivergences.Average(x => x);
             var maxRelativeDivergence = relativeDivergences.Max(x => x);
 
-            var time1 = new TimeSpan((long)(sw1.ElapsedMilliseconds * 10000 / (double)exactRunCount));
+            ////var time1 = new TimeSpan((long)(sw1.ElapsedMilliseconds * 10000 / (double)exactRunCount));
             var time2 = new TimeSpan((long)(sw2.ElapsedMilliseconds * 10000 / (double)runCount));
 
-            Console.WriteLine($"Average relative divergence: {averageRelativeDivergence:P4}");
-            Console.WriteLine($"    Max relative divergence: {maxRelativeDivergence:P4}");
-            Console.WriteLine($"             Exact Run Time: {time1}\t(run {exactRunCount} times)");
+            ////foreach (var x in exactResults
+            ////        .Zip(results, (er, r) => new { a = er.Price, b = r.Price }))
+            ////{
+            ////    Console.WriteLine($"{x.a} - {x.b} = {x.a - x.b}");
+            ////}
+
+            Console.WriteLine();
+            Console.WriteLine($"Average relative divergence: {averageRelativeDivergence}");
+            Console.WriteLine($"    Max relative divergence: {maxRelativeDivergence}");
+            ////Console.WriteLine($"             Exact Run Time: {time1}\t(run {exactRunCount} times)");
             Console.WriteLine($"                   Run Time: {time2}\t(run {runCount} times)");
-            Console.WriteLine($"                      Ratio: {time1.Ticks / (double)time2.Ticks:P2}");
+            ////Console.WriteLine($"                      Ratio: {time1.Ticks / (double)time2.Ticks:P2}");
             Console.WriteLine();
         }
 

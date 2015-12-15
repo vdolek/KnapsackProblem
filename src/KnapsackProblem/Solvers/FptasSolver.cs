@@ -9,23 +9,45 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solvers
     /// </summary>
     public class FptasSolver : ISolver
     {
+        private readonly double epsilon;
+
         private readonly DynamicByPriceSolver dynamicByPriceSolver = new DynamicByPriceSolver();
+
+        public FptasSolver(double epsilon)
+        {
+            this.epsilon = epsilon;
+        }
 
         public Result Solve(Instance instance)
         {
-            var eps = 0.5;
             var maxPrice = instance.Items.Max(x => x.Price);
-            var k = eps * maxPrice / instance.ItemCount;
-            var b = (int)Math.Log(k, 2);
-
-            var newInstance = instance.Clone();
-            foreach (var item in newInstance.Items)
+            var k = (int)(epsilon * maxPrice / instance.ItemCount);
+            if (k <= 1)
             {
-                item.Price = item.Price >> b;
+                k = 1;
             }
 
-            var result = dynamicByPriceSolver.Solve(newInstance);
-            result.Price <<= b;
+            // get FPTAS instance with reduced prices
+            var fptasInstance = instance.Clone();
+            foreach (var item in fptasInstance.Items)
+            {
+                item.Price /= k;
+            }
+
+            // use dynamic alg FPTAS instance (decomposition by price)
+            var dynamicResult = dynamicByPriceSolver.Solve(fptasInstance);
+
+            // calculate price with real prices (not reduced prices from fptasInstance)
+            var result = new Result
+            {
+                Instance = instance,
+                Price = instance.Items
+                    .Where(x => ((1L << x.Index) & dynamicResult.State) != 0)
+                    .Sum(x => x.Price),
+                ////Price = dynamicResult.Price * k,
+                Weight = dynamicResult.Weight,
+                State = dynamicResult.State
+            };
             return result;
         }
     }
