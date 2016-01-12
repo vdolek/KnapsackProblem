@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Threading;
 using Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Model;
 using Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Providers;
 using Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Runners;
@@ -17,10 +16,11 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem
         public static void Main(string[] args)
         {
             ////RunHomework1Or2();
-            RunHomework3();
+            ////RunHomework3();
+            RunHomework4();
         }
 
-        #region HW 1 ang 2
+        #region HW 1 and 2
 
         private static void RunHomework1Or2()
         {
@@ -186,6 +186,24 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem
                 var runner = new CompareRunner(instances, new DynamicByWeightSolver(), solver);
                 runner.Run();
             }
+        }
+
+        #endregion
+
+        #region HW 4
+
+        private static void RunHomework4()
+        {
+            var path = string.Format(Path, 40);
+            var instanceProvider = new TextReaderInstanceProvider(new StreamReader(path));
+
+            var solver = new SimulatedAnnealingSolver();
+            var exactSolver = new DynamicByPriceSolver();
+
+            var runner = new CompareRunner(instanceProvider, exactSolver, solver);
+            runner.Run();
+
+            Console.ReadLine();
         }
 
         #endregion

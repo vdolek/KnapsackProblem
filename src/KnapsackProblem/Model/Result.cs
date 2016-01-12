@@ -22,6 +22,11 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Model
             Price = items.Sum(x => x.Price);
         }
 
+        public Result(Instance instance, long state)
+            : this(instance, instance.Items.Where((x, idx) => (state & (1L << idx)) != 0).ToArray())
+        {
+        }
+
         public Result(Instance instance, long state, int weight, int price)
         {
             Instance = instance;

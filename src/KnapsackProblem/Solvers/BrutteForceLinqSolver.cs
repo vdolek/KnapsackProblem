@@ -23,7 +23,7 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solvers
                 .Where(x => x.weight <= instance.Capacity);
 
             var maxPrice = 0;
-            var solution = Enumerable.Empty<Item>();
+            var solution = Enumerable.Empty<Item>().ToArray();
             foreach (var possibleSolution in possibleSolutions)
             {
                 var price = possibleSolution.price;
@@ -34,7 +34,7 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solvers
                 }
             }
 
-            var res = new Result(instance, solution.ToArray());
+            var res = new Result(instance, solution);
             return res;
         }
     }
