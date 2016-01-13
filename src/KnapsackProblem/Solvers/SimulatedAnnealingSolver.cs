@@ -12,27 +12,33 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solvers
     {
         private readonly Random rand = new Random(0);
 
-        private readonly double InitTemperature = 100d;
-        private readonly double FrozenTemperature = 1d;
-        private readonly double CoolingCoeficient = 0.8;
-        private readonly int EquilibriumCoeficient = 1;
+        private readonly double initTemperature = 100d;
+        private readonly double frozenTemperature = 1d;
+        private readonly double coolingCoeficient = 0.8;
+        private readonly int equilibriumCoeficient = 1;
+
+        public SimulatedAnnealingSolver()
+        {
+        }
+
+        public SimulatedAnnealingSolver(double initTemperature, double frozenTemperature, double coolingCoeficient)
+        {
+            this.initTemperature = initTemperature;
+            this.frozenTemperature = frozenTemperature;
+            this.coolingCoeficient = coolingCoeficient;
+        }
 
         public Result Solve(Instance instance)
         {
-            var temperature = InitTemperature;
             var currentResult = new Result(instance, 0, 0, 0);
             var bestResult = currentResult;
 
-            while (temperature > FrozenTemperature) // is frozen
+            for (var temperature = initTemperature; IsFrozen(temperature); temperature *= coolingCoeficient)
             {
-                var innerCycle = 0;
-
                 currentResult = bestResult; // it is good to go back to best result sometimes
 
-                while (Equilibrium(instance, innerCycle))
+                for (var innerCycle = 0; Equilibrium(instance, innerCycle); ++innerCycle)
                 {
-                    ++innerCycle;
-
                     currentResult = GetNextResult(instance, temperature, currentResult);
 
                     if (currentResult.Price > bestResult.Price)
@@ -40,17 +46,20 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solvers
                         bestResult = currentResult;
                     }
                 }
-
-                // cool down
-                temperature *= CoolingCoeficient;
             }
 
             return bestResult;
         }
 
+        private bool IsFrozen(double temperature)
+        {
+            var res = temperature > frozenTemperature;
+            return res;
+        }
+
         private bool Equilibrium(Instance instance, int innerCycle)
         {
-            var res = innerCycle < (EquilibriumCoeficient * instance.Capacity);
+            var res = innerCycle < (equilibriumCoeficient * instance.Capacity);
             return res;
         }
 

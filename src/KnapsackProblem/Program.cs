@@ -195,12 +195,21 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem
         private static void RunHomework4()
         {
             var path = string.Format(Path, 40);
-            var instanceProvider = new TextReaderInstanceProvider(new StreamReader(path));
+            var instanceProvider = new TextReaderInstanceProvider(() => new StreamReader(path));
 
-            var solver = new SimulatedAnnealingSolver();
             var exactSolver = new DynamicByPriceSolver();
+            var heuristicSolver = new HeuristicSolver();
 
-            var runner = new CompareRunner(instanceProvider, exactSolver, solver);
+            IRunner runner;
+
+            Console.WriteLine("Solving by heuristic");
+            runner = new CompareRunner(instanceProvider, exactSolver, heuristicSolver);
+            runner.Run();
+            Console.WriteLine();
+
+            Console.WriteLine("Solving by simulated annealing");
+            var simulatedAnnealingSolver = new SimulatedAnnealingSolver(initTemperature: 100, frozenTemperature: 1, coolingCoeficient: 0.8);
+            runner = new CompareRunner(instanceProvider, exactSolver, simulatedAnnealingSolver);
             runner.Run();
 
             Console.ReadLine();

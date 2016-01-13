@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -7,11 +8,16 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Providers
 {
     public class TextReaderInstanceProvider : IInstanceProvider
     {
-        private readonly TextReader textReader;
+        private readonly Func<TextReader> textReaderFactory;
 
         public TextReaderInstanceProvider(TextReader textReader)
         {
-            this.textReader = textReader;
+            textReaderFactory = () => textReader;
+        }
+
+        public TextReaderInstanceProvider(Func<TextReader> textReaderFactory)
+        {
+            this.textReaderFactory = textReaderFactory;
         }
 
         public IList<Instance> GetInstances()
@@ -23,6 +29,8 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Providers
 
         private IEnumerable<Instance> GetInstancesInner()
         {
+            var textReader = textReaderFactory();
+
             string line;
             while ((line = textReader.ReadLine()) != null)
             {
