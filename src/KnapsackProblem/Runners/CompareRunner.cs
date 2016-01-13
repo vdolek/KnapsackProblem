@@ -44,13 +44,14 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Runners
 
             sw1.Stop();
 
-            ReadOnlyCollection<Result> results = null;
+            IList<Result> results = Enumerable.Empty<Result>().ToArray();
             var sw2 = Stopwatch.StartNew();
             var runCount = 0;
-            while (sw2.ElapsedMilliseconds < 1000)
+            while (sw2.ElapsedMilliseconds < 5000)
             {
                 ++runCount;
-                results = instances.Select(instance => solver.Solve(instance)).ToList().AsReadOnly();
+                var newResults = instances.Select(instance => solver.Solve(instance)).ToList().AsReadOnly();
+                results = results.Concat(newResults).ToArray();
             }
 
             sw1.Stop();
