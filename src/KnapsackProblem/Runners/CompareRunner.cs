@@ -72,7 +72,7 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Runners
             ////    Console.WriteLine($"{x.a} - {x.b} = {x.a - x.b}");
             ////}
 
-            Console.WriteLine();
+            //Console.WriteLine();
             Console.WriteLine($"Average relative divergence: {averageRelativeDivergence}");
             Console.WriteLine($"    Max relative divergence: {maxRelativeDivergence}");
             ////Console.WriteLine($"             Exact Run Time: {time1}\t(run {exactRunCount} times)");

@@ -200,19 +200,67 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem
             var exactSolver = new DynamicByPriceSolver();
             var heuristicSolver = new HeuristicSolver();
 
-            IRunner runner;
-
             Console.WriteLine("Solving by heuristic");
-            runner = new CompareRunner(instanceProvider, exactSolver, heuristicSolver);
+            Console.WriteLine("===================================================");
+            IRunner runner = new CompareRunner(instanceProvider, exactSolver, heuristicSolver);
             runner.Run();
             Console.WriteLine();
 
             Console.WriteLine("Solving by simulated annealing");
-            var simulatedAnnealingSolver = new SimulatedAnnealingSolver(initTemperature: 100, frozenTemperature: 1, coolingCoeficient: 0.8, equilibriumCoeficient: 2);
-            runner = new CompareRunner(instanceProvider, exactSolver, simulatedAnnealingSolver);
-            runner.Run();
+            Console.WriteLine("===================================================");
+            Console.WriteLine();
+
+            const int baseInitTemperature = 100;
+            const int baseFrozenTemperature = 1;
+            const double baseCoolingCoef = 0.9;
+            const int baseEquilibriumCoef = 2;
+
+            {
+                Console.WriteLine("By temperature");
+                Console.WriteLine("---------------------------------------------------");
+                var temperatures = new[] { 50, 100, 200, 500 };
+                foreach (var temperature in temperatures)
+                {
+                    RunSimulatedAnnealingForConfiguration(instanceProvider, temperature, baseFrozenTemperature, baseCoolingCoef, baseEquilibriumCoef);
+                }
+            }
+
+            {
+                Console.WriteLine("By cooling coeficient");
+                Console.WriteLine("---------------------------------------------------");
+                var coolingCoefs = new[] { 0.8, 0.85, 0.9, 0.95 };
+                foreach (var coolingCoef in coolingCoefs)
+                {
+                    RunSimulatedAnnealingForConfiguration(instanceProvider, baseInitTemperature, baseFrozenTemperature, coolingCoef, baseEquilibriumCoef);
+                }
+            }
+
+            {
+                Console.WriteLine("By equilibrium coeficient");
+                Console.WriteLine("---------------------------------------------------");
+                var equilibriumCoefs = new[] { 1, 2, 3, 5 };
+                foreach (var equilibriumCoef in equilibriumCoefs)
+                {
+                    RunSimulatedAnnealingForConfiguration(instanceProvider, baseInitTemperature, baseFrozenTemperature, baseCoolingCoef, equilibriumCoef);
+                }
+            }
 
             Console.ReadLine();
+        }
+
+        private static void RunSimulatedAnnealingForConfiguration(IInstanceProvider instanceProvider,
+            double initTemperature, double frozenTemperature, double coolingCoeficient, int equilibriumCoeficient)
+        {
+            Console.WriteLine($"Init temperature:       {initTemperature}");
+            Console.WriteLine($"Cooling coeficient:     {coolingCoeficient}");
+            Console.WriteLine($"Equilibrium coeficient: {equilibriumCoeficient}");
+
+            var exactSolver = new DynamicByPriceSolver();
+            var simulatedAnnealingSolver = new SimulatedAnnealingSolver(initTemperature, frozenTemperature, coolingCoeficient, equilibriumCoeficient);
+
+            var runner = new CompareRunner(instanceProvider, exactSolver, simulatedAnnealingSolver);
+            runner.Run();
+            Console.WriteLine();
         }
 
         #endregion

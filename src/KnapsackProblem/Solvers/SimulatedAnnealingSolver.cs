@@ -8,11 +8,11 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solvers
     /// </summary>
     public class SimulatedAnnealingSolver : ISolver
     {
-        private readonly Random rand = new Random(1);
+        private readonly Random rand = new Random(0);
 
         private readonly double initTemperature = 100d;
         private readonly double frozenTemperature = 1d;
-        private readonly double coolingCoeficient = 0.8;
+        private readonly double coolingCoeficient = 0.95;
         private readonly int equilibriumCoeficient = 2;
 
         public SimulatedAnnealingSolver()
