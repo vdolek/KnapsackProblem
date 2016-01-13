@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Model;
 
 namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solvers
@@ -19,22 +21,26 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solvers
         {
             var temperature = InitTemperature;
             var state = 0L;
-            var bestResult = new Result(instance, state);
+            var bestState = state;
+            var bestPrice = 0;
 
             while (temperature > FrozenTemperature) // is frozen
             {
                 var innerCycle = 0;
+
+                state = bestState; // it is good to go back to best result sometimes
 
                 while (Equilibrium(instance, innerCycle))
                 {
                     ++innerCycle;
                     
                     state = GetNextState(instance, temperature, state);
-                    var newResult = new Result(instance, state);
+                    var newPrice = GetPrice(instance, state);
 
-                    if (newResult.Price > bestResult.Price)
+                    if (newPrice > bestPrice)
                     {
-                        bestResult = newResult;
+                        bestPrice = newPrice;
+                        bestState = state;
                     }
                 }
 
@@ -42,7 +48,7 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solvers
                 temperature *= CoolingCoeficient;
             }
 
-            return bestResult;
+            return new Result(instance, bestState);
         }
 
         private bool Equilibrium(Instance instance, int innerCycle)
@@ -53,23 +59,22 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solvers
 
         private long GetNextState(Instance instance, double temperature, long state)
         {
-            var oldResult = new Result(instance, state);
+            var oldPrice = GetPrice(instance, state);
 
             // get random state (only fitting in knapsack)
             var newState = GetRandomState(instance, state); ;
-            var newResult = new Result(instance, newState);
+            var newPrice = GetPrice(instance, newState);
 
             // when new state is better
-            if (newResult.Price > oldResult.Price)
+            if (newPrice > oldPrice)
             {
                 return newState;
             }
             else // when new state is worse
             {
                 var random = rand.NextDouble();
-                var delta = oldResult.Price - newResult.Price;
+                var delta = oldPrice - newPrice;
                 var useWorse = random < Math.Exp(-delta / temperature);
-                //Console.WriteLine(useWorse);
                 return useWorse ? newState : state;
             }
         }
@@ -80,12 +85,12 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solvers
         private long GetRandomState(Instance instance, long state)
         {
             long newState;
-            Result newResult;
+            int newWeight;
             do
             {
                 newState = GetRandomStateInner(instance, state);
-                newResult = new Result(instance, newState);
-            } while (newResult.Weight > instance.Capacity);
+                newWeight = GetWeight(instance, newState);
+            } while (newWeight > instance.Capacity);
             return newState;
         }
 
@@ -97,6 +102,26 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solvers
             var itemIndex = rand.Next(0, instance.ItemCount);
             var randomState = state ^ (1L << itemIndex);
             return randomState;
+        }
+
+        private static IEnumerable<Item> GetItems(Instance instance, long state)
+        {
+            var items = instance.Items.Where((x, idx) => (state & (1L << idx)) != 0);
+            return items;
+        }
+
+        private static int GetPrice(Instance instance, long state)
+        {
+            var items = GetItems(instance, state);
+            var price = items.Sum(x => x.Price);
+            return price;
+        }
+
+        private static int GetWeight(Instance instance, long state)
+        {
+            var items = GetItems(instance, state);
+            var weight = items.Sum(x => x.Weight);
+            return weight;
         }
     }
 }
