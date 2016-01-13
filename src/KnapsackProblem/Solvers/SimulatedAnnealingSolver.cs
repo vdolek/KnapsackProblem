@@ -20,27 +20,24 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solvers
         public Result Solve(Instance instance)
         {
             var temperature = InitTemperature;
-            var state = 0L;
-            var bestState = state;
-            var bestPrice = 0;
+            var currentResult = new Result(instance, 0, 0, 0);
+            var bestResult = currentResult;
 
             while (temperature > FrozenTemperature) // is frozen
             {
                 var innerCycle = 0;
 
-                state = bestState; // it is good to go back to best result sometimes
+                currentResult = bestResult; // it is good to go back to best result sometimes
 
                 while (Equilibrium(instance, innerCycle))
                 {
                     ++innerCycle;
-                    
-                    state = GetNextState(instance, temperature, state);
-                    var newPrice = GetPrice(instance, state);
 
-                    if (newPrice > bestPrice)
+                    currentResult = GetNextResult(instance, temperature, currentResult);
+
+                    if (currentResult.Price > bestResult.Price)
                     {
-                        bestPrice = newPrice;
-                        bestState = state;
+                        bestResult = currentResult;
                     }
                 }
 
@@ -48,7 +45,7 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solvers
                 temperature *= CoolingCoeficient;
             }
 
-            return new Result(instance, bestState);
+            return bestResult;
         }
 
         private bool Equilibrium(Instance instance, int innerCycle)
@@ -57,41 +54,41 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solvers
             return res;
         }
 
-        private long GetNextState(Instance instance, double temperature, long state)
+        private Result GetNextResult(Instance instance, double temperature, Result currentResult)
         {
-            var oldPrice = GetPrice(instance, state);
-
             // get random state (only fitting in knapsack)
-            var newState = GetRandomState(instance, state); ;
-            var newPrice = GetPrice(instance, newState);
+            var newResult = GetRandomResult(instance, currentResult); ;
 
             // when new state is better
-            if (newPrice > oldPrice)
+            if (newResult.Price > currentResult.Price)
             {
-                return newState;
+                return newResult;
             }
             else // when new state is worse
             {
                 var random = rand.NextDouble();
-                var delta = oldPrice - newPrice;
+                var delta = currentResult.Price - newResult.Price;
                 var useWorse = random < Math.Exp(-delta / temperature);
-                return useWorse ? newState : state;
+                return useWorse ? newResult : currentResult;
             }
         }
 
         /// <summary>
         /// Gets random state that differs in one bit and fots in the knapsack.
         /// </summary>
-        private long GetRandomState(Instance instance, long state)
+        private Result GetRandomResult(Instance instance, Result currentResult)
         {
             long newState;
             int newWeight;
             do
             {
-                newState = GetRandomStateInner(instance, state);
+                newState = GetRandomStateInner(instance, currentResult.State);
                 newWeight = GetWeight(instance, newState);
             } while (newWeight > instance.Capacity);
-            return newState;
+
+            var newPrice = GetPrice(instance, newState);
+            var newResult = new Result(instance, newState, newWeight, newPrice);
+            return newResult;
         }
 
         /// <summary>
