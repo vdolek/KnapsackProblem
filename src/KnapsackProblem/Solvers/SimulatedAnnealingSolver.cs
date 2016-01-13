@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Model;
 
 namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solvers
@@ -10,7 +8,7 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solvers
     /// </summary>
     public class SimulatedAnnealingSolver : ISolver
     {
-        private readonly Random rand = new Random(0);
+        private readonly Random rand = new Random(1);
 
         private readonly double initTemperature = 100d;
         private readonly double frozenTemperature = 1d;
@@ -66,7 +64,7 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solvers
         private Result GetNextResult(Instance instance, double temperature, Result currentResult)
         {
             // get random state (only fitting in knapsack)
-            var newResult = GetRandomResult(instance, currentResult); ;
+            var newResult = GetRandomResult(instance, currentResult);
 
             // when new state is better
             if (newResult.Price > currentResult.Price)
@@ -87,47 +85,39 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solvers
         /// </summary>
         private Result GetRandomResult(Instance instance, Result currentResult)
         {
-            long newState;
-            int newWeight;
+            Result newResult;
             do
             {
-                newState = GetRandomStateInner(instance, currentResult.State);
-                newWeight = GetWeight(instance, newState);
-            } while (newWeight > instance.Capacity);
+                newResult = GetRandomResultInner(instance, currentResult);
+            } while (newResult.Weight > instance.Capacity);
 
-            var newPrice = GetPrice(instance, newState);
-            var newResult = new Result(instance, newState, newWeight, newPrice);
             return newResult;
         }
 
         /// <summary>
         /// Gets random state that differs in one bit.
         /// </summary>
-        private long GetRandomStateInner(Instance instance, long state)
+        private Result GetRandomResultInner(Instance instance, Result currentResult)
         {
             var itemIndex = rand.Next(0, instance.ItemCount);
-            var randomState = state ^ (1L << itemIndex);
-            return randomState;
-        }
+            var itemBitArray = 1L << itemIndex;
+            var randomState = currentResult.State ^ itemBitArray;
+            
+            var newResult = currentResult.Clone();
+            newResult.State = randomState;
 
-        private static IEnumerable<Item> GetItems(Instance instance, long state)
-        {
-            var items = instance.Items.Where((x, idx) => (state & (1L << idx)) != 0);
-            return items;
-        }
+            if ((newResult.State & itemBitArray) == 0)
+            {
+                newResult.Price -= instance.Items[itemIndex].Price;
+                newResult.Weight -= instance.Items[itemIndex].Weight;
+            }
+            else
+            {
+                newResult.Price += instance.Items[itemIndex].Price;
+                newResult.Weight += instance.Items[itemIndex].Weight;
+            }
 
-        private static int GetPrice(Instance instance, long state)
-        {
-            var items = GetItems(instance, state);
-            var price = items.Sum(x => x.Price);
-            return price;
-        }
-
-        private static int GetWeight(Instance instance, long state)
-        {
-            var items = GetItems(instance, state);
-            var weight = items.Sum(x => x.Weight);
-            return weight;
+            return newResult;
         }
     }
 }
