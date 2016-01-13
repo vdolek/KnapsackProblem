@@ -13,17 +13,18 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem.Solvers
         private readonly double initTemperature = 100d;
         private readonly double frozenTemperature = 1d;
         private readonly double coolingCoeficient = 0.8;
-        private readonly int equilibriumCoeficient = 1;
+        private readonly int equilibriumCoeficient = 2;
 
         public SimulatedAnnealingSolver()
         {
         }
 
-        public SimulatedAnnealingSolver(double initTemperature, double frozenTemperature, double coolingCoeficient)
+        public SimulatedAnnealingSolver(double initTemperature, double frozenTemperature, double coolingCoeficient, int equilibriumCoeficient)
         {
             this.initTemperature = initTemperature;
             this.frozenTemperature = frozenTemperature;
             this.coolingCoeficient = coolingCoeficient;
+            this.equilibriumCoeficient = equilibriumCoeficient;
         }
 
         public Result Solve(Instance instance)

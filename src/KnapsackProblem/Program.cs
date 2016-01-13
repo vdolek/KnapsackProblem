@@ -208,7 +208,7 @@ namespace Cz.Volek.CVUT.FIT.MIPAA.KnapsackProblem
             Console.WriteLine();
 
             Console.WriteLine("Solving by simulated annealing");
-            var simulatedAnnealingSolver = new SimulatedAnnealingSolver(initTemperature: 100, frozenTemperature: 1, coolingCoeficient: 0.8);
+            var simulatedAnnealingSolver = new SimulatedAnnealingSolver(initTemperature: 100, frozenTemperature: 1, coolingCoeficient: 0.8, equilibriumCoeficient: 2);
             runner = new CompareRunner(instanceProvider, exactSolver, simulatedAnnealingSolver);
             runner.Run();
 
